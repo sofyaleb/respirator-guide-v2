@@ -340,10 +340,11 @@ window.RG = (() => {
     return {
       setMask(m) {
         mask = m;
-        // particles still in the air take on the new mask's odds; ones already on the old mask fade out
-        parts.forEach((q) => { if (q.s === 'fly') assign(q); else q.a = Math.min(q.a, .5); });
         if (reduce) { still(); return; }
-        if (!started) { started = true; for (let i = 0; i < 60; i++) spawn(Math.random() * .9); last = performance.now(); requestAnimationFrame(frame); }
+        // start over with every particle grey and still in the air, so each mask's colours build up from scratch
+        parts = []; spawnAcc = 0;
+        for (let i = 0; i < 60; i++) spawn(Math.random() * .45);
+        if (!started) { started = true; last = performance.now(); requestAnimationFrame(frame); }
       },
     };
   }

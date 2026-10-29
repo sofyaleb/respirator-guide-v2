@@ -1,27 +1,30 @@
 // The mask data, the models to look for, and the animated face drawing used on the guide.
 window.RG = (() => {
-  // In protection order. pf: protection factor (UK HSE / US OSHA rating; typical study values for cloth,
+  // In protection order. weight: on the face or head; carried: worn elsewhere (belt fan and battery).
+  // pf: protection factor (UK HSE / US OSHA rating; typical study values for cloth,
   // surgical and ear-loop). filter: share of particles that pass through the filter itself, used only to
   // colour the animation; the rest of 1/pf slips in round the edges. style: how the face scene draws it.
   const MASKS = [
     { id: 'none', name: 'No mask', short: 'No mask', sub: '', pf: 1, pfLabel: '1×', filter: 0, style: 'none',
-      note: 'Everything in the air reaches your nose and mouth.', meta: '' },
+      note: 'Everything in the air reaches your nose and mouth.', price: '—', weight: '—' },
     { id: 'cloth', name: 'Cloth mask', short: 'Cloth mask', sub: 'No standard', pf: 1.5, pfLabel: '~1.5×', filter: .3, style: 'cloth',
-      note: 'Air goes through the weave and round the sides. Fine as a cover, not as protection.', meta: 'About $6, washable' },
+      note: 'Air goes through the weave and round the sides. Fine as a cover, not as protection.', price: '~$6', weight: '~15 g' },
     { id: 'surgical', name: 'Surgical mask', short: 'Surgical mask', sub: 'EN 14683 · ASTM F2100', pf: 3, pfLabel: '~3×', filter: .08, style: 'surgical',
-      note: 'Made to catch splashes and your own droplets, not to seal. Most of what you breathe in comes round the sides.', meta: 'About 15¢ each' },
+      note: 'Made to catch splashes and your own droplets, not to seal. Most of what you breathe in comes round the sides.', price: '~15¢ each', weight: '~3 g' },
     { id: 'ffp2ear', name: 'KN95 or FFP2 with ear loops', short: 'Ear-loop KN95', sub: 'Good filter, weak seal', pf: 5, pfLabel: '~5×', filter: .02, style: 'ffpear', tag: 'warn',
-      note: 'The filter is as good as an N95’s, but ear loops rarely hold a seal. In fit tests about 4 in 100 pass, against about 80 in 100 for folded three-panel respirators with head straps.', meta: 'About 70¢ each' },
-    { id: 'ffp2', name: 'N95 or FFP2 with head straps', short: 'N95 / FFP2', sub: 'Also sold as KN95, KF94, P2', pf: 10, pfLabel: '10×', filter: .02, style: 'ffp', tag: 'best', models: true,
-      note: 'The everyday respirator for crowds, travel, smoke and viral illness. Sealed well, most people get far better than 10×.', meta: 'About $1 each' },
+      note: 'The filter is as good as an N95’s, but ear loops rarely hold a seal. In fit tests about 4 in 100 pass, against about 80 in 100 for folded three-panel respirators with head straps.', price: '~70¢ each', weight: '~8 g' },
+    { id: 'ffp2', name: 'N95 or FFP2 with head straps', short: 'N95 / FFP2', sub: 'Also sold as KN95, KF94, P2', pf: 10, pfLabel: '10×', filter: .02, style: 'ffp', tag: 'best', models: 'disposable',
+      note: 'The everyday respirator for crowds, travel, smoke and viral illness. Sealed well, most people get far better than 10×.', price: '~$1 each', weight: '~10 g' },
     { id: 'ffp3', name: 'FFP3', short: 'FFP3', sub: 'Top EU and UK disposable class', pf: 20, pfLabel: '20×', filter: .005, style: 'ffp3',
-      note: 'Used in high-risk healthcare. Many have an exhalation valve, which lets some of your breath out unfiltered.', meta: 'About $4 each' },
-    { id: 'half', name: 'Reusable half mask', short: 'Half mask', sub: 'Rubber or silicone, P100 or P3 filters', pf: 20, pfLabel: '20×', filter: .0005, style: 'half', models: true,
-      note: 'Usually seals better than a disposable, and lasts for years. The cheapest high protection if you wear one often.', meta: 'About $40 with filters' },
+      note: 'Used in high-risk healthcare. Many have an exhalation valve, which lets some of your breath out unfiltered.', price: '~$4 each', weight: '~15 g' },
+    { id: 'half', name: 'Reusable half mask', short: 'Half mask', sub: 'Rubber or silicone, P100 or P3 filters', pf: 20, pfLabel: '20×', filter: .0005, style: 'half', models: 'reusable',
+      note: 'Usually seals better than a disposable, and lasts for years. The cheapest high protection if you wear one often.', price: '~$40', weight: '~120 g' },
     { id: 'hood', name: 'Powered hood (PAPR)', short: 'Powered hood', sub: 'Battery fan, loose hood', pf: 25, pfLabel: '25×', filter: .0005, style: 'hood',
-      note: 'A fan blows filtered air into the hood, so nothing needs to seal. Works with a beard.', meta: 'About $1,500 and up' },
+      note: 'A fan blows filtered air into the hood, so nothing needs to seal. Works with a beard.', price: '$1,500+', weight: '~600 g', carried: '+ 1.1 kg on a belt' },
     { id: 'full', name: 'Full-face mask', short: 'Full-face mask', sub: 'P100 or P3 filters', pf: 40, pfLabel: '40×', filter: .0005, style: 'full',
-      note: 'A half mask with a visor that covers your eyes too. Bulky for everyday wear.', meta: 'About $200 with filters' },
+      note: 'A half mask with a visor that covers your eyes too. Bulky for everyday wear.', price: '~$200', weight: '~450 g' },
+    { id: 'papr', name: 'Powered half mask', short: 'Powered half mask', sub: 'Battery fan, sealed half mask', pf: 40, pfLabel: '40×', filter: .0005, style: 'papr',
+      note: 'A belt fan pushes filtered air into a sealed half mask, so breathing takes no effort. Rated level with a full-face mask.', price: '$1,500+', weight: '~150 g', carried: '+ 1.3 kg on a belt' },
   ];
 
   // ---- Particle scene: a face seen from the front, drawn in a 400 × 300 box and scaled to fit ----
@@ -31,7 +34,7 @@ window.RG = (() => {
     const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
     let C = {}, mask = null, parts = [], scale = 1, ox = 0, oy = 0, last = 0, clock = 0, spawnAcc = 0;
     const readColors = () => {
-      C = {}; ['face', 'face-2', 'accent', 'accent-soft', 'particle', 'filter', 'edge', 'surface', 'line', 'rubber', 'ink-soft', 'cart', 'strap2', 'strap3']
+      C = {}; ['face', 'face-2', 'accent', 'accent-soft', 'particle', 'caught', 'filter', 'edge', 'surface', 'line', 'rubber', 'ink-soft', 'cart', 'strap2', 'strap3']
         .forEach((k) => { C[k] = css('--' + k); });
     };
 
@@ -292,7 +295,7 @@ window.RG = (() => {
           const e = q.t; ctx.globalAlpha = .45 + .55 * e; ctx.fillStyle = q.fate === 'straight' && e > .75 ? C['edge'] : C['particle'];
           ctx.beginPath(); ctx.arc(q.x, q.y, q.r * (.5 + .5 * e), 0, Math.PI * 2); ctx.fill(); continue;
         }
-        const col = q.s === 'stuck' ? C['particle'] : q.s === 'through' ? C['filter'] : C['edge'];
+        const col = q.s === 'stuck' ? C['caught'] : q.s === 'through' ? C['filter'] : C['edge'];
         if (q.s !== 'stuck' && q.ring < 1) {
           ctx.globalAlpha = (1 - q.ring) * .9; ctx.strokeStyle = col; ctx.lineWidth = 1.8;
           ctx.beginPath(); ctx.arc(q.tx, q.ty, 2 + q.ring * 10, 0, Math.PI * 2); ctx.stroke();
@@ -303,7 +306,7 @@ window.RG = (() => {
         }
         ctx.globalAlpha = a; ctx.fillStyle = col;
         ctx.beginPath(); ctx.arc(q.x, q.y, q.s === 'stuck' ? q.r + .4 : q.r + (q.hold > 0 ? 1.2 : .6), 0, Math.PI * 2); ctx.fill();
-        if (q.s === 'stuck' && q.hold > 0) { ctx.globalAlpha = a * .5; ctx.strokeStyle = C['ink-soft']; ctx.lineWidth = .8; ctx.beginPath(); ctx.arc(q.x, q.y, q.r + 1.8, 0, Math.PI * 2); ctx.stroke(); }
+        if (q.s === 'stuck' && q.hold > 0) { ctx.globalAlpha = a * .5; ctx.strokeStyle = C['caught']; ctx.lineWidth = .8; ctx.beginPath(); ctx.arc(q.x, q.y, q.r + 1.8, 0, Math.PI * 2); ctx.stroke(); }
       }
       ctx.globalAlpha = 1;
       parts = parts.filter((q) => q.a > 0);

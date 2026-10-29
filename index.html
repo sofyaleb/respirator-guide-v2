@@ -15,7 +15,7 @@
   /* One long page: answer and explorer first, then situations, the ideas behind the numbers, fit, buying, names, sources. */
   :root {
     --bg: #f4f5f3; --surface: #ffffff; --ink: #121a1d; --ink-soft: #5b676b; --line: #e0e4e3; --dot: #e2e6e5;
-    --accent: #0d7a72; --accent-soft: #d6ebe8; --particle: #9aa5a9; --filter: #d28a1e; --edge: #d2453b;
+    --accent: #0d7a72; --accent-soft: #d6ebe8; --particle: #9aa5a9; --caught: #2f9e44; --filter: #d28a1e; --edge: #d2453b;
     --face: #e6eaeb; --face-2: #d3dadc; --rubber: #4a565a; --cart: #d9679b; --strap2: #3a6fb5; --strap3: #c8402f;
     --shadow: 0 1px 2px rgba(18,26,29,.04), 0 10px 30px rgba(18,26,29,.06);
     --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -26,7 +26,7 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #0e1416; --surface: #162023; --ink: #e8eeee; --ink-soft: #97a5a9; --line: #263134; --dot: #243033;
-      --accent: #3cc2b5; --accent-soft: #163b38; --particle: #66757a; --filter: #f0a83c; --edge: #ff6b5c;
+      --accent: #3cc2b5; --accent-soft: #163b38; --particle: #66757a; --caught: #5fd27a; --filter: #f0a83c; --edge: #ff6b5c;
       --face: #263235; --face-2: #1f292c; --rubber: #8a9ba0; --cart: #e58bb5; --strap2: #6f9be0; --strap3: #f06a55;
       --shadow: 0 0 0 1px #1f2a2d;
       color-scheme: dark;
@@ -34,7 +34,7 @@
   }
   :root[data-theme="dark"] {
     --bg: #0e1416; --surface: #162023; --ink: #e8eeee; --ink-soft: #97a5a9; --line: #263134; --dot: #243033;
-    --accent: #3cc2b5; --accent-soft: #163b38; --particle: #66757a; --filter: #f0a83c; --edge: #ff6b5c;
+    --accent: #3cc2b5; --accent-soft: #163b38; --particle: #66757a; --caught: #5fd27a; --filter: #f0a83c; --edge: #ff6b5c;
     --face: #263235; --face-2: #1f292c; --rubber: #8a9ba0; --cart: #e58bb5; --strap2: #6f9be0; --strap3: #f06a55;
     --shadow: 0 0 0 1px #1f2a2d;
     color-scheme: dark;
@@ -64,6 +64,8 @@
   h3 { font-size: 1.125rem; font-weight: 600; line-height: 1.3; margin: 0; letter-spacing: -.005em; }
   .lede { font-size: clamp(1.08rem, 1.7vw, 1.3rem); line-height: 1.5; color: var(--ink-soft); max-width: 38rem; margin-top: 1.1rem; }
   .lede b { color: var(--ink); font-weight: 600; }
+  .def { max-width: 38rem; margin-top: 1rem; padding-left: .9rem; border-left: 3px solid var(--accent); color: var(--ink-soft); font-size: .95rem; }
+  .def b { color: var(--ink); font-weight: 600; }
   .kicker { font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
   .dek { color: var(--ink-soft); max-width: 40rem; margin-top: .7rem; font-size: 1.05rem; }
   .small { font-size: .82rem; color: var(--ink-soft); line-height: 1.5; }
@@ -75,16 +77,28 @@
 
   /* ---- explorer ---- */
   .explorer { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 2rem; margin-top: clamp(2rem, 4vw, 3rem); align-items: start; }
-  .viz { margin: 0; background: var(--surface); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; position: sticky; top: 1rem; z-index: 2; }
+  .viz-col { position: sticky; top: 1rem; z-index: 2; display: grid; gap: .75rem; }
+  .viz { margin: 0; background: var(--surface); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+  .info { display: grid; gap: .6rem; padding: .85rem 1.1rem 1rem; border-top: 1px solid var(--line); }
+  .info-name b { font-weight: 600; font-size: 1.05rem; line-height: 1.25; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; margin: 0; }
+  .stats div { min-width: 0; }
+  .stats dt { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  .stats dd { margin: .1rem 0 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stats dd small { display: block; font-size: .75rem; font-weight: 500; color: var(--ink-soft); }
+  .about { margin: 0; padding: 1rem 1.1rem; color: var(--ink-soft); font-size: .92rem; min-height: 5.6rem; }
+  .models-panel { margin-top: 1rem; display: grid; gap: .1rem; }
+  .models-panel .models { margin-top: .4rem; }
+  .models-panel .more { font-size: .82rem; color: var(--accent); font-weight: 500; text-decoration: none; margin-top: .5rem; justify-self: start; }
+  .models-panel .more:hover { text-decoration: underline; }
   .stage { position: relative; aspect-ratio: 4 / 3; }
   .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .readout { position: absolute; left: 1.1rem; top: 1rem; pointer-events: none; display: grid; gap: .15rem; text-shadow: 0 0 4px var(--surface), 0 0 8px var(--surface); }
   .readout .n { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.4rem); line-height: .95; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
   .readout .u { font-size: .85rem; color: var(--ink-soft); line-height: 1.3; }
-  .readout .u b { color: var(--ink); font-weight: 600; }
   .key { display: flex; flex-wrap: wrap; gap: .3rem 1rem; padding: .7rem 1.1rem .8rem; border-top: 1px solid var(--line); font-size: .78rem; color: var(--ink-soft); }
-  .key span { display: inline-flex; align-items: center; gap: .4rem; }
-  .key i { width: .55rem; height: .55rem; border-radius: 50%; background: var(--particle); }
+  .key > span { display: inline-flex; align-items: center; gap: .4rem; }
+  .key i { width: .55rem; height: .55rem; border-radius: 50%; background: var(--caught); }
   .key i.f { background: var(--filter); } .key i.e { background: var(--edge); }
 
   .picker-head { display: flex; justify-content: space-between; padding: 0 .9rem .5rem; }
@@ -102,16 +116,16 @@
   .tag { display: inline-block; font-size: .68rem; font-weight: 600; letter-spacing: .03em; padding: .1rem .5rem; border-radius: 999px; margin-left: .45rem; vertical-align: 2px; white-space: nowrap; }
   .tag.best { background: var(--accent-soft); color: var(--accent); }
   .tag.warn { background: color-mix(in srgb, var(--edge) 15%, transparent); color: var(--edge); }
-  .o-detail { padding: 0 .9rem .95rem; display: grid; gap: .45rem; font-size: .92rem; color: var(--ink-soft); }
-  .o-detail .meta { font-size: .82rem; }
-  .o-detail .meta b { color: var(--ink); font-weight: 600; }
-  .o-detail a { color: var(--accent); font-weight: 500; font-size: .85rem; text-decoration: none; justify-self: start; }
-  .o-detail a:hover { text-decoration: underline; }
 
   @media (max-width: 860px) {
+    /* phones: the figure and key numbers stay pinned while the list scrolls; the note and models follow the list */
     .explorer { grid-template-columns: 1fr; gap: .75rem; }
-    .viz { top: 0; margin-inline: calc(-1 * var(--gutter)); border-radius: 0 0 18px 18px; }
-    .stage { aspect-ratio: auto; height: min(38vh, 62vw); }
+    .viz-col, .list-col { display: contents; }
+    .viz { position: sticky; top: 0; z-index: 2; margin-inline: calc(-1 * var(--gutter)); border-radius: 0 0 18px 18px; }
+    .picker-head { order: 1; } .picker { order: 2; } .about { order: 3; min-height: 0; } .models-panel { order: 4; margin-top: 0; }
+    .info { padding: .6rem var(--gutter) .75rem; gap: .4rem; }
+    .info-name .o-sub, .key .long { display: none; }
+    .stage { aspect-ratio: auto; height: min(32vh, 58vw); }
     .key { padding: .55rem var(--gutter) .65rem; font-size: .7rem; gap: .25rem .75rem; }
     .readout { left: var(--gutter); }
     .picker-head { padding-top: .75rem; }
@@ -133,6 +147,8 @@
   @media (max-width: 860px) { .idea { grid-template-columns: 1fr; } }
   .idea-text { display: grid; gap: .9rem; max-width: 34rem; }
   .idea-text .num { color: var(--accent); margin-right: .35rem; }
+  .go { justify-self: start; font-weight: 600; color: var(--accent); text-decoration: none; }
+  .go:hover { text-decoration: underline; }
   .idea-text h3 { font-family: var(--serif); font-size: clamp(1.45rem, 2.6vw, 1.85rem); font-weight: 500; letter-spacing: -.01em; line-height: 1.15; }
   .fig { display: grid; gap: 1rem; }
   .fig-title { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
@@ -262,29 +278,43 @@
 <div class="wrap">
   <nav class="top" aria-label="Sections">
     <a class="brand" href="./">Respirator guide</a>
-    <span class="toc"><a href="#compare">Compare</a><a href="#choose">Choose</a><a href="#how">How it works</a><a href="#fit">Fit</a><a href="#buy">Buy</a><a href="#sources">Sources</a></span>
+    <span class="toc"><a href="#compare">Compare</a><a href="#choose">Choose</a><a href="#how">How it works</a><a href="#fit">Fit</a><a href="#buy">Buy</a><a href="time.html">Exposure clock</a><a href="#sources">Sources</a></span>
   </nav>
 
   <!-- ===== Answer + explorer ===== -->
   <section id="compare">
     <h1>Which mask should you wear?</h1>
     <p class="lede">For most people: <b>an N95 or FFP2 with head straps, sealed to your face.</b> It is rated to let in no more than 1 in 10 airborne particles, and with a good seal usually lets in far fewer. A loose surgical mask lets in about 1 in 3, mostly round the edges.</p>
+    <p class="def"><b>Protection factor</b> is how many times less you breathe in than with no mask: at 10×, 1 in every 10 particles in the air gets in.</p>
 
     <div class="explorer">
-      <figure class="viz">
-        <div class="stage">
-          <canvas id="scene" role="img" aria-label="Particles drifting towards a face wearing the selected mask"></canvas>
-          <div class="readout" aria-live="polite">
-            <span class="n" id="ro-n">10</span>
-            <span class="u">in 100 particles get in<br><b id="ro-name">N95 / FFP2</b> · <span id="ro-pf">10×</span></span>
+      <div class="viz-col">
+        <figure class="viz">
+          <div class="stage">
+            <canvas id="scene" role="img" aria-label="Particles drifting towards a face wearing the selected mask"></canvas>
+            <div class="readout" aria-hidden="true"><span class="n" id="ro-n">10</span><span class="u">in 100 particles<br>get in</span></div>
           </div>
-        </div>
-        <figcaption class="key"><span><i></i>Caught by the mask</span><span><i class="f"></i>Through the filter</span><span><i class="e"></i>Round the edges</span></figcaption>
-      </figure>
+          <div class="key"><span><i></i><span>Caught<span class="long"> by the mask</span></span></span><span><i class="f"></i>Through the filter</span><span><i class="e"></i>Round the edges</span></div>
+          <div class="info" aria-live="polite">
+            <div class="info-name"><b id="i-name">N95 or FFP2 with head straps</b><span id="i-tag"></span><span class="o-sub" id="i-sub"></span></div>
+            <dl class="stats">
+              <div><dt>Protection</dt><dd id="i-pf">10×</dd></div>
+              <div><dt>Price</dt><dd id="i-price">~$1 each</dd></div>
+              <div><dt>Weight</dt><dd id="i-weight">~10 g</dd></div>
+            </dl>
+          </div>
+        </figure>
+        <p class="card about" id="i-note"></p>
+      </div>
 
-      <div>
+      <div class="list-col">
         <div class="picker-head kicker"><span>Pick a mask</span><span>Protection</span></div>
         <ul class="picker" id="picker" aria-label="Masks, from least to most protective"></ul>
+        <div class="card models-panel" id="mp" hidden>
+          <h3>Models to look for</h3>
+          <ul class="models" id="mp-list"></ul>
+          <a class="more" href="#buy">Buying tips and spotting fakes ↓</a>
+        </div>
       </div>
     </div>
   </section>
@@ -407,6 +437,7 @@
           <h3><span class="num">4</span>Time adds up, and a mask slows the clock</h3>
           <p>What you breathe in builds up the longer you stay. A mask divides it: 8 hours in a 10× respirator adds up to the same as 48 minutes with no mask. In a surgical mask, it is about 2 hours 40 minutes.</p>
           <p>Two things speed the clock up: more particles in the air, as in a crowded, stuffy room or smoke, and breathing harder, as when exercising, singing or talking loudly.</p>
+          <a class="go" href="time.html">Open the exposure clock →</a>
         </div>
         <div class="card fig">
           <div class="time-ctl">
@@ -518,7 +549,7 @@
     <header><h2>Sources</h2></header>
     <div class="sources">
       <div>
-        <p>Protection factors are assigned ratings: the protection an employer can count on from a mask that has been fit-tested and is worn correctly. EU classes use UK HSE ratings and US classes use OSHA’s. Cloth and surgical figures are typical values from fit studies; the ear-loop figure is an estimate from fit-test pass rates.</p>
+        <p>Protection factors are assigned ratings: the protection an employer can count on from a mask that has been fit-tested and is worn correctly. EU classes use UK HSE ratings and US classes use OSHA’s. Cloth and surgical figures are typical values from fit studies; the ear-loop figure is an estimate from fit-test pass rates. Prices and weights are typical for the models listed, from makers’ and retailers’ specs.</p>
         <p>In the animation, particles that get in are split between the filter and the edges to show the two paths; the total matches each mask’s rating.</p>
       </div>
       <ol class="srcs">
@@ -542,7 +573,7 @@
   <footer class="foot"><span>Respirator guide · updated October 2026</span><a href="#compare">Back to top ↑</a></footer>
 </div>
 
-<script src="shared.js?v=20261029b"></script>
+<script src="shared.js?v=2.5"></script>
 <script>
 (() => {
   const { MASKS, MODELS, createScene } = window.RG;
@@ -557,7 +588,7 @@
   const picker = $('picker');
   const rows = MASKS.map((m) => {
     const li = el('li', 'opt'); li.dataset.id = m.id;
-    const b = el('button'); b.type = 'button'; b.setAttribute('aria-controls', `d-${m.id}`);
+    const b = el('button'); b.type = 'button'; 
     const name = el('span', 'o-name', m.name);
     if (m.tag) name.appendChild(el('span', `tag ${m.tag}`, m.tag === 'best' ? 'Best for most' : 'Rarely seals'));
     if (m.sub) name.appendChild(el('span', 'o-sub', m.sub));
@@ -565,25 +596,35 @@
     fill.style.width = `${getsIn(m)}%`; track.appendChild(fill);
     bar.append(track, el('span', null, `${fmtIn(getsIn(m))} in 100 get in`));
     b.append(name, el('span', 'o-pf', m.pfLabel), bar);
-    const d = el('div', 'o-detail'); d.id = `d-${m.id}`; d.hidden = true;
-    d.appendChild(el('p', null, m.note));
-    if (m.meta) d.appendChild(el('p', 'meta', m.meta));
-    if (m.models) { const a = el('a', null, 'Models to look for ↓'); a.href = '#buy'; d.appendChild(a); }
-    li.append(b, d); picker.appendChild(li);
+    b.setAttribute('aria-pressed', 'false');
+    li.appendChild(b); picker.appendChild(li);
     b.addEventListener('click', () => select(m.id));
     b.addEventListener('keydown', (e) => {
       const k = MASKS.indexOf(m), next = e.key === 'ArrowDown' ? k + 1 : e.key === 'ArrowUp' ? k - 1 : -1;
       if (next < 0 || next >= MASKS.length) return;
       e.preventDefault(); select(MASKS[next].id); rows[next].b.focus();
     });
-    return { m, li, b, d };
+    return { m, li, b };
+  });
+  // the card under the figure has the same fields for every mask; models show below the list when there are some
+  const modelItems = (items) => items.map((p) => {
+    const li = el('li'), a = el('a', null, `${p.where} ↗`);
+    a.href = p.url; a.target = '_blank'; a.rel = 'noopener';
+    li.append(el('b', null, p.name), a, el('span', null, p.tag)); return li;
   });
   function select(id) {
     const m = MASKS.find((x) => x.id === id);
-    rows.forEach((r) => { const on = r.m === m; r.li.toggleAttribute('data-on', on); r.b.setAttribute('aria-expanded', String(on)); r.d.hidden = !on; });
+    rows.forEach((r) => { const on = r.m === m; r.li.toggleAttribute('data-on', on); r.b.setAttribute('aria-pressed', String(on)); });
     $('ro-n').textContent = fmtIn(getsIn(m));
-    $('ro-name').textContent = m.short;
-    $('ro-pf').textContent = m.pfLabel;
+    $('i-name').textContent = m.name;
+    $('i-tag').replaceChildren(...(m.tag ? [el('span', `tag ${m.tag}`, m.tag === 'best' ? 'Best for most' : 'Rarely seals')] : []));
+    $('i-sub').textContent = m.sub;
+    $('i-pf').textContent = m.pfLabel;
+    $('i-price').textContent = m.price;
+    $('i-weight').replaceChildren(m.weight, ...(m.carried ? [el('small', null, m.carried)] : []));
+    $('i-note').textContent = m.note;
+    $('mp').hidden = !m.models;
+    $('mp-list').replaceChildren(...(m.models ? modelItems(MODELS[m.models]) : []));
     $('scene').setAttribute('aria-label', m.id === 'none' ? 'No mask: every particle reaches the nose and mouth' : `${m.name}: about ${fmtIn(getsIn(m))} in 100 particles get in, most of them round the edges`);
     scene.setMask(m);
   }
@@ -686,13 +727,7 @@
   });
 
   // ---- models ----
-  Object.entries(MODELS).forEach(([key, items]) => {
-    $(`m-${key}`).replaceChildren(...items.map((p) => {
-      const li = el('li'), a = el('a', null, `${p.where} ↗`);
-      a.href = p.url; a.target = '_blank'; a.rel = 'noopener';
-      li.append(el('b', null, p.name), a, el('span', null, p.tag)); return li;
-    }));
-  });
+  Object.entries(MODELS).forEach(([key, items]) => $(`m-${key}`).replaceChildren(...modelItems(items)));
 })();
 </script>
 </body>

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Exposure Clock</title>
+<meta name="description" content="What you breathe in adds up with time and effort. See how much each mask slows the clock.">
+<meta property="og:title" content="A mask slows the clock">
+<meta property="og:description" content="What you breathe in adds up with time and effort. See how much each mask slows the clock.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500&display=swap">
+<style>
+  /* One tool: a clock and situation controls on the left, each mask's dose on the right; three short ideas below. */
+  :root {
+    --bg: #f4f5f3; --surface: #ffffff; --ink: #121a1d; --ink-soft: #5b676b; --line: #e0e4e3; --dot: #e2e6e5;
+    --accent: #0d7a72; --accent-soft: #d6ebe8; --edge: #d2453b;
+    --shadow: 0 1px 2px rgba(18,26,29,.04), 0 10px 30px rgba(18,26,29,.06);
+    --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --gutter: max(16px, env(safe-area-inset-left, 0px));
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1416; --surface: #162023; --ink: #e8eeee; --ink-soft: #97a5a9; --line: #263134; --dot: #243033;
+      --accent: #3cc2b5; --accent-soft: #163b38; --edge: #ff6b5c; --shadow: 0 0 0 1px #1f2a2d;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1416; --surface: #162023; --ink: #e8eeee; --ink-soft: #97a5a9; --line: #263134; --dot: #243033;
+    --accent: #3cc2b5; --accent-soft: #163b38; --edge: #ff6b5c; --shadow: 0 0 0 1px #1f2a2d;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  p { margin: 0; }
+  .wrap { max-width: 72rem; margin-inline: auto; padding-inline: var(--gutter); }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem 1.5rem; flex-wrap: wrap; padding-block: 1.25rem; font-size: .875rem; }
+  .brand { font-weight: 600; text-decoration: none; letter-spacing: -.01em; }
+  .toc { display: flex; flex-wrap: wrap; gap: .25rem 1.1rem; }
+  .toc a { color: var(--ink-soft); text-decoration: none; }
+  .toc a:hover, .toc a[aria-current="page"] { color: var(--ink); }
+
+  h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.015em; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.5rem, 6.4vw, 4.25rem); line-height: 1; max-width: 14ch; margin-top: clamp(1rem, 4vw, 2.5rem); }
+  h2 { font-size: clamp(1.45rem, 2.6vw, 1.85rem); line-height: 1.15; }
+  h3 { font-size: 1.05rem; font-weight: 600; margin: 0; }
+  .lede { font-size: clamp(1.08rem, 1.7vw, 1.3rem); line-height: 1.5; color: var(--ink-soft); max-width: 38rem; margin-top: 1.1rem; }
+  .lede b { color: var(--ink); font-weight: 600; }
+  .formula { display: inline-block; margin-top: 1.25rem; font-variant-numeric: tabular-nums; background: var(--accent-soft); border-radius: 10px; padding: .55rem .85rem; font-weight: 500; font-size: .95rem; }
+  .kicker { font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
+  .small { font-size: .82rem; color: var(--ink-soft); line-height: 1.5; }
+  .card { background: var(--surface); border-radius: 20px; box-shadow: var(--shadow); padding: clamp(1.1rem, 3vw, 1.75rem); min-width: 0; }
+
+  /* ---- tool ---- */
+  .tool { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(1.5rem, 4vw, 3rem); margin-top: clamp(2rem, 4vw, 3rem); }
+  @media (max-width: 860px) { .tool { grid-template-columns: 1fr; } }
+  .ctl { display: grid; gap: 1.25rem; align-content: start; }
+  .clockrow { display: flex; align-items: center; gap: 1.25rem; }
+  .clock { flex: none; width: clamp(96px, 22vw, 132px); height: auto; }
+  .clock .face { fill: var(--bg); stroke: var(--line); stroke-width: 2; }
+  .clock .tick { stroke: var(--ink-soft); stroke-width: 1.5; opacity: .5; }
+  .clock .sweep { fill: var(--accent-soft); }
+  .clock .hand { stroke: var(--accent); stroke-width: 3.5; stroke-linecap: round; }
+  .clock .hub { fill: var(--accent); }
+  .readout { display: grid; gap: .4rem; }
+  .readout .t { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .play { font: inherit; font-size: .85rem; font-weight: 600; padding: .4rem .95rem; border-radius: 999px; border: 0; background: var(--ink); color: var(--bg); cursor: pointer; justify-self: start; }
+  .group { display: grid; gap: .5rem; }
+  .seg { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .seg button { font: inherit; font-size: .82rem; padding: .35rem .8rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft); cursor: pointer; text-align: left; line-height: 1.3; }
+  .seg button small { display: block; font-size: .7rem; opacity: .8; font-variant-numeric: tabular-nums; }
+  .seg button:hover { color: var(--ink); border-color: var(--ink-soft); }
+  .seg button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .seg.act button { border-radius: 12px; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; margin: 0; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: linear-gradient(to right, var(--ink) var(--fill, 50%), var(--line) var(--fill, 50%)); }
+  input[type=range]::-moz-range-track { height: 4px; border-radius: 4px; background: var(--line); }
+  input[type=range]::-moz-range-progress { height: 4px; border-radius: 4px; background: var(--ink); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); border: 2px solid var(--ink); margin-top: -9px; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--surface); border: 2px solid var(--ink); }
+  .ends { display: flex; justify-content: space-between; font-size: .72rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  .result { display: grid; gap: 1.1rem; align-content: start; }
+  .rows { display: grid; gap: 1rem; }
+  .row { display: grid; gap: .35rem; }
+  .row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .row-top span { font-weight: 600; font-size: .95rem; }
+  .row-top span small { font-weight: 400; color: var(--ink-soft); margin-left: .35rem; font-variant-numeric: tabular-nums; }
+  .row-top b { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .track { height: 12px; border-radius: 6px; background: var(--dot); overflow: hidden; }
+  .track i { display: block; height: 100%; border-radius: 6px; background: var(--accent); }
+  .track i.none { background: var(--edge); }
+  @media (max-width: 600px) { .row.best .row-top span::after { display: none; } }
+  .row.best .row-top span::after { content: "Best for most"; font-size: .68rem; font-weight: 600; letter-spacing: .03em; padding: .1rem .5rem; border-radius: 999px; margin-left: .5rem; background: var(--accent-soft); color: var(--accent); vertical-align: 2px; }
+
+  /* ---- ideas ---- */
+  .ideas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: clamp(3rem, 7vw, 5rem); }
+  @media (max-width: 860px) { .ideas { grid-template-columns: 1fr; } }
+  .ideas .card { display: grid; gap: .6rem; align-content: start; }
+  .ideas p { color: var(--ink-soft); font-size: .95rem; }
+  .ideas p b { color: var(--ink); font-weight: 600; }
+  .breath { display: grid; gap: .45rem; margin-top: .35rem; }
+  .breath div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 3.4rem; gap: .6rem; align-items: center; font-size: .8rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .breath b { text-align: right; color: var(--ink); font-weight: 600; }
+  .breath .track { height: 8px; }
+
+  .foot { margin-top: clamp(3rem, 6vw, 5rem); padding-block: 1.25rem 2.5rem; border-top: 1px solid var(--line); font-size: .8rem; color: var(--ink-soft); display: grid; gap: .5rem; }
+  .foot p { max-width: 70ch; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Pages">
+    <a class="brand" href="./">Respirator guide</a>
+    <span class="toc"><a href="./">Which mask</a><a href="./#how">How it works</a><a href="time.html" aria-current="page">Exposure clock</a></span>
+  </nav>
+
+  <header>
+    <span class="kicker">Exposure clock</span>
+    <h1>A mask slows the clock</h1>
+    <p class="lede">What you breathe in adds up with every minute, and faster when you breathe hard. A mask divides it: <b>8 hours in an N95 adds up to about 48 minutes with no mask.</b></p>
+    <p class="formula">time × how hard you breathe ÷ protection factor = time unmasked, sitting still</p>
+  </header>
+
+  <div class="tool">
+    <div class="card ctl">
+      <div class="clockrow">
+        <svg class="clock" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="56" class="face"/>
+          <g id="ticks"></g>
+          <path id="sweep" class="sweep" d=""/>
+          <line x1="60" y1="60" x2="60" y2="18" class="hand" id="hand"/>
+          <circle cx="60" cy="60" r="4" class="hub"/>
+        </svg>
+        <div class="readout">
+          <span class="kicker">Time in the same air</span>
+          <output class="t" id="t-out" for="t-slider">8 h</output>
+          <button type="button" class="play" id="play">▶ Play</button>
+        </div>
+      </div>
+      <div class="group">
+        <input type="range" id="t-slider" min="0" max="720" step="5" value="480" aria-label="Time in the same air">
+        <div class="ends"><span>0</span><span>6 h</span><span>12 h</span></div>
+      </div>
+      <div class="group">
+        <span class="kicker">Situation</span>
+        <div class="seg" id="scen" role="group" aria-label="Situations"></div>
+      </div>
+      <div class="group">
+        <span class="kicker">How hard you’re breathing</span>
+        <div class="seg act" id="act" role="group" aria-label="Activity"></div>
+      </div>
+    </div>
+
+    <div class="card result" aria-live="polite">
+      <div>
+        <h2 id="r-head">8 hours sitting, in each mask</h2>
+        <p class="small" id="r-sub">Each bar is what you breathe in, shown as time with no mask, sitting still.</p>
+      </div>
+      <div class="rows" id="rows"></div>
+    </div>
+  </div>
+
+  <div class="ideas">
+    <div class="card">
+      <h3>Minutes add up</h3>
+      <p>Breathing the same air for twice as long means twice the dose. A mask divides every minute: an hour in an N95 counts like <b>6 minutes</b> unmasked, a 12-hour flight like <b>72 minutes</b>.</p>
+    </div>
+    <div class="card">
+      <h3>Breathing harder speeds it up</h3>
+      <p>Hard exercise moves over ten times as much air as sitting, so an hour at the gym can count for more than a day at a desk.</p>
+      <div class="breath" id="breath"></div>
+      <p class="small">Adult averages, litres per minute (US EPA).</p>
+    </div>
+    <div class="card">
+      <h3>Busier air speeds it up too</h3>
+      <p>The clock assumes the air stays the same. Crowded, stuffy rooms and smoke hold more particles, so each minute counts for more. Fresh air, open windows and distance slow it down.</p>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <p>Protection factors are the same as on the <a href="./">mask guide</a>. Breathing rates are mean values for adults aged 31 to 40 from the <a href="https://www.epa.gov/expobox/exposure-factors-handbook-chapter-6" target="_blank" rel="noopener">US EPA Exposure Factors Handbook, chapter 6</a> (2011).</p>
+    <p><a href="./">← Back to the mask guide</a></p>
+  </footer>
+</div>
+
+<script src="shared.js?v=2.5"></script>
+<script>
+(() => {
+  const { MASKS } = window.RG;
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const pf = (id) => MASKS.find((m) => m.id === id).pf;
+
+  // masks to compare, by rating; masks with the same rating share a row
+  const ROWS = [
+    ['No mask', pf('none'), ''],
+    ['Surgical mask', pf('surgical'), '~3×'],
+    ['KN95 with ear loops', pf('ffp2ear'), '~5×'],
+    ['N95 or FFP2', pf('ffp2'), '10×', 'best'],
+    ['FFP3 or half mask', pf('ffp3'), '20×'],
+    ['Full-face or powered half mask', pf('full'), '40×'],
+  ];
+  // breathing relative to sitting: adult mean inhalation rates, L/min (US EPA Exposure Factors Handbook, table 6-2, ages 31 to 40)
+  const ACTS = [
+    { id: 'sit', name: 'Sitting', lpm: 4.3 },
+    { id: 'light', name: 'Light activity', lpm: 12 },
+    { id: 'mod', name: 'Moderate exercise', lpm: 27 },
+    { id: 'hard', name: 'Hard exercise', lpm: 49 },
+  ];
+  const SCENES = [
+    { name: 'Bus ride', min: 30, act: 'sit' },
+    { name: 'Gym class', min: 60, act: 'hard' },
+    { name: 'Dinner party', min: 180, act: 'sit' },
+    { name: 'Work day', min: 480, act: 'light' },
+    { name: 'Long-haul flight', min: 720, act: 'sit' },
+  ];
+  const MAXMIN = 720;
+  const fmt = (m) => { m = Math.round(m); if (m < 1) return 'under 1 min'; if (m < 60) return `${m} min`; const h = Math.floor(m / 60), r = m % 60; return r ? `${h} h ${r} min` : `${h} h`; };
+  const fmtLong = (m) => { m = Math.round(m); if (m < 60) return `${m} minutes`; const h = m / 60; return Number.isInteger(h) ? `${h} hour${h === 1 ? '' : 's'}` : fmt(m); };
+  let min = 480, act = ACTS[0];
+
+  // clock ticks
+  for (let k = 0; k < 12; k++) {
+    const a = k / 12 * Math.PI * 2, l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    [['x1', 60 + Math.sin(a) * 50], ['y1', 60 - Math.cos(a) * 50], ['x2', 60 + Math.sin(a) * (k % 3 ? 46 : 42)], ['y2', 60 - Math.cos(a) * (k % 3 ? 46 : 42)]].forEach(([n, v]) => l.setAttribute(n, v.toFixed(2)));
+    l.setAttribute('class', 'tick'); $('ticks').appendChild(l);
+  }
+
+  const rows = ROWS.map(([name, p, label, best]) => {
+    const row = el('div', 'row' + (best ? ' best' : '')), top = el('div', 'row-top'), n = el('span', null, name), v = el('b'), track = el('div', 'track'), fill = el('i', p === 1 ? 'none' : '');
+    if (label) n.appendChild(el('small', null, label));
+    top.append(n, v); track.appendChild(fill); row.append(top, track); $('rows').appendChild(row);
+    return { p, v, fill };
+  });
+
+  ACTS.forEach((a) => {
+    const b = el('button', null, a.name); b.type = 'button'; b.dataset.id = a.id;
+    b.appendChild(el('small', null, a.id === 'sit' ? 'baseline' : `×${(a.lpm / ACTS[0].lpm).toFixed(0)} the air`));
+    b.addEventListener('click', () => { act = a; draw(); }); $('act').appendChild(b);
+  });
+  SCENES.forEach((s) => {
+    const b = el('button', null, s.name); b.type = 'button';
+    b.appendChild(el('small', null, fmt(s.min)));
+    b.addEventListener('click', () => { stop(); min = s.min; act = ACTS.find((a) => a.id === s.act); draw(); });
+    s.btn = b; $('scen').appendChild(b);
+  });
+
+  // breathing rates in the second idea card
+  ACTS.forEach((a) => {
+    const d = el('div'), t = el('div', 'track'), i = el('i');
+    i.style.width = `${a.lpm / 49 * 100}%`; t.appendChild(i);
+    d.append(el('span', null, a.name), t, el('b', null, `${Math.round(a.lpm)} L`)); $('breath').appendChild(d);
+  });
+
+  const slider = $('t-slider');
+  function draw() {
+    const mult = act.lpm / ACTS[0].lpm;
+    slider.value = min; slider.style.setProperty('--fill', `${min / MAXMIN * 100}%`);
+    slider.setAttribute('aria-valuetext', fmt(min));
+    $('t-out').textContent = min === 0 ? '0 h' : fmt(min);
+    $('r-head').textContent = min === 0 ? 'Press play or pick a situation' : `${fmtLong(min)} ${act.name.toLowerCase()}, in each mask`;
+    // bars share one scale: 12 hours sitting unmasked, stretched when the no-mask dose goes past it
+    const scale = Math.max(MAXMIN, min * mult);
+    rows.forEach((r) => {
+      const eq = min * mult / r.p;
+      r.fill.style.width = `${eq / scale * 100}%`;
+      r.v.textContent = min === 0 ? '—' : `like ${fmt(eq)}`;
+    });
+    $('act').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.id === act.id)));
+    SCENES.forEach((s) => s.btn.setAttribute('aria-pressed', String(s.min === min && s.act === act.id)));
+    // clock: one full turn per 12 hours, with the elapsed part shaded
+    const a = (min / MAXMIN) * Math.PI * 2, big = a > Math.PI ? 1 : 0;
+    $('hand').setAttribute('x2', (60 + Math.sin(a) * 40).toFixed(2)); $('hand').setAttribute('y2', (60 - Math.cos(a) * 40).toFixed(2));
+    $('sweep').setAttribute('d', min >= MAXMIN ? 'M60 6 A54 54 0 1 1 59.99 6 Z' : min === 0 ? '' : `M60 60 L60 6 A54 54 0 ${big} 1 ${(60 + Math.sin(a) * 54).toFixed(2)} ${(60 - Math.cos(a) * 54).toFixed(2)} Z`);
+  }
+
+  // play: one hour per second
+  let playing = false, raf = 0, last = 0;
+  const stop = () => { playing = false; cancelAnimationFrame(raf); $('play').textContent = '▶ Play'; };
+  const tick = (now) => {
+    if (!playing) return;
+    const dt = last ? Math.min(.1, (now - last) / 1000) : 0; last = now;
+    min = Math.min(MAXMIN, min + dt * 60); draw();
+    if (min >= MAXMIN) { stop(); return; }
+    raf = requestAnimationFrame(tick);
+  };
+  $('play').addEventListener('click', () => {
+    if (playing) { stop(); return; }
+    if (min >= MAXMIN) min = 0;
+    playing = true; last = 0; $('play').textContent = '❚❚ Pause';
+    raf = requestAnimationFrame(tick);
+  });
+  slider.addEventListener('input', () => { stop(); min = +slider.value; draw(); });
+  draw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Respirator Guide</title>
+<meta name="description" content="Which mask to wear, how much each one lets in, and how to get a seal that works. A visual guide to respirators.">
+<meta property="og:title" content="Which mask should you wear?">
+<meta property="og:description" content="How much each mask lets in, why fit matters more than the filter, and what to buy.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500&display=swap">
+<style>
+  /* One long page: answer and explorer first, then situations, the ideas behind the numbers, fit, buying, names, sources. */
+  :root {
+    --bg: #f4f5f3; --surface: #ffffff; --ink: #121a1d; --ink-soft: #5b676b; --line: #e0e4e3; --dot: #e2e6e5;
+    --accent: #0d7a72; --accent-soft: #d6ebe8; --particle: #9aa5a9; --filter: #d28a1e; --edge: #d2453b;
+    --face: #e6eaeb; --face-2: #d3dadc; --rubber: #4a565a; --cart: #d9679b; --strap2: #3a6fb5; --strap3: #c8402f;
+    --shadow: 0 1px 2px rgba(18,26,29,.04), 0 10px 30px rgba(18,26,29,.06);
+    --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --gutter: max(16px, env(safe-area-inset-left, 0px));
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1416; --surface: #162023; --ink: #e8eeee; --ink-soft: #97a5a9; --line: #263134; --dot: #243033;
+      --accent: #3cc2b5; --accent-soft: #163b38; --particle: #66757a; --filter: #f0a83c; --edge: #ff6b5c;
+      --face: #263235; --face-2: #1f292c; --rubber: #8a9ba0; --cart: #e58bb5; --strap2: #6f9be0; --strap3: #f06a55;
+      --shadow: 0 0 0 1px #1f2a2d;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1416; --surface: #162023; --ink: #e8eeee; --ink-soft: #97a5a9; --line: #263134; --dot: #243033;
+    --accent: #3cc2b5; --accent-soft: #163b38; --particle: #66757a; --filter: #f0a83c; --edge: #ff6b5c;
+    --face: #263235; --face-2: #1f292c; --rubber: #8a9ba0; --cart: #e58bb5; --strap2: #6f9be0; --strap3: #f06a55;
+    --shadow: 0 0 0 1px #1f2a2d;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 1rem; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  p { margin: 0; }
+  .wrap { max-width: 72rem; margin-inline: auto; padding-inline: var(--gutter); }
+
+  /* top bar */
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem 1.5rem; flex-wrap: wrap; padding-block: 1.25rem; font-size: .875rem; }
+  .brand { font-weight: 600; text-decoration: none; letter-spacing: -.01em; }
+  .toc { display: flex; flex-wrap: wrap; gap: .25rem 1.1rem; }
+  .toc a { color: var(--ink-soft); text-decoration: none; }
+  .toc a:hover { color: var(--ink); }
+
+  /* type */
+  h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.015em; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.5rem, 6.4vw, 4.25rem); line-height: 1; max-width: 15ch; margin-top: clamp(1rem, 4vw, 2.5rem); }
+  h2 { font-size: clamp(1.9rem, 4vw, 2.75rem); line-height: 1.08; }
+  h3 { font-size: 1.125rem; font-weight: 600; line-height: 1.3; margin: 0; letter-spacing: -.005em; }
+  .lede { font-size: clamp(1.08rem, 1.7vw, 1.3rem); line-height: 1.5; color: var(--ink-soft); max-width: 38rem; margin-top: 1.1rem; }
+  .lede b { color: var(--ink); font-weight: 600; }
+  .kicker { font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
+  .dek { color: var(--ink-soft); max-width: 40rem; margin-top: .7rem; font-size: 1.05rem; }
+  .small { font-size: .82rem; color: var(--ink-soft); line-height: 1.5; }
+  .formula { font-variant-numeric: tabular-nums; background: var(--accent-soft); border-radius: 10px; padding: .55rem .85rem; font-weight: 500; font-size: .95rem; justify-self: start; }
+
+  section.block { padding-top: clamp(4rem, 9vw, 7rem); }
+  .block > header { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+  .card { background: var(--surface); border-radius: 18px; box-shadow: var(--shadow); padding: 1.25rem; min-width: 0; }
+
+  /* ---- explorer ---- */
+  .explorer { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 2rem; margin-top: clamp(2rem, 4vw, 3rem); align-items: start; }
+  .viz { margin: 0; background: var(--surface); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; position: sticky; top: 1rem; z-index: 2; }
+  .stage { position: relative; aspect-ratio: 4 / 3; }
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .readout { position: absolute; left: 1.1rem; top: 1rem; pointer-events: none; display: grid; gap: .15rem; text-shadow: 0 0 4px var(--surface), 0 0 8px var(--surface); }
+  .readout .n { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.4rem); line-height: .95; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .readout .u { font-size: .85rem; color: var(--ink-soft); line-height: 1.3; }
+  .readout .u b { color: var(--ink); font-weight: 600; }
+  .key { display: flex; flex-wrap: wrap; gap: .3rem 1rem; padding: .7rem 1.1rem .8rem; border-top: 1px solid var(--line); font-size: .78rem; color: var(--ink-soft); }
+  .key span { display: inline-flex; align-items: center; gap: .4rem; }
+  .key i { width: .55rem; height: .55rem; border-radius: 50%; background: var(--particle); }
+  .key i.f { background: var(--filter); } .key i.e { background: var(--edge); }
+
+  .picker-head { display: flex; justify-content: space-between; padding: 0 .9rem .5rem; }
+  .picker { list-style: none; margin: 0; padding: 0; display: grid; gap: .15rem; }
+  .opt { border-radius: 14px; transition: background-color .2s ease, box-shadow .2s ease; }
+  .opt[data-on] { background: var(--surface); box-shadow: var(--shadow); }
+  .opt > button { font: inherit; color: inherit; text-align: left; background: none; border: 0; width: 100%; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .4rem 1rem; padding: .6rem .9rem; border-radius: 14px; }
+  .opt:not([data-on]) > button:hover { background: color-mix(in srgb, var(--surface) 55%, transparent); }
+  .o-name { font-weight: 600; line-height: 1.25; }
+  .o-sub { display: block; font-weight: 400; font-size: .8rem; color: var(--ink-soft); margin-top: .1rem; }
+  .o-pf { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .o-bar { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) 6.6rem; gap: .8rem; white-space: nowrap; align-items: center; font-size: .75rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .o-track { height: 6px; border-radius: 3px; background: var(--dot); overflow: hidden; }
+  .o-track i { display: block; height: 100%; min-width: 2px; border-radius: 3px; background: var(--edge); }
+  .tag { display: inline-block; font-size: .68rem; font-weight: 600; letter-spacing: .03em; padding: .1rem .5rem; border-radius: 999px; margin-left: .45rem; vertical-align: 2px; white-space: nowrap; }
+  .tag.best { background: var(--accent-soft); color: var(--accent); }
+  .tag.warn { background: color-mix(in srgb, var(--edge) 15%, transparent); color: var(--edge); }
+  .o-detail { padding: 0 .9rem .95rem; display: grid; gap: .45rem; font-size: .92rem; color: var(--ink-soft); }
+  .o-detail .meta { font-size: .82rem; }
+  .o-detail .meta b { color: var(--ink); font-weight: 600; }
+  .o-detail a { color: var(--accent); font-weight: 500; font-size: .85rem; text-decoration: none; justify-self: start; }
+  .o-detail a:hover { text-decoration: underline; }
+
+  @media (max-width: 860px) {
+    .explorer { grid-template-columns: 1fr; gap: .75rem; }
+    .viz { top: 0; margin-inline: calc(-1 * var(--gutter)); border-radius: 0 0 18px 18px; }
+    .stage { aspect-ratio: auto; height: min(38vh, 62vw); }
+    .key { padding: .55rem var(--gutter) .65rem; font-size: .7rem; gap: .25rem .75rem; }
+    .readout { left: var(--gutter); }
+    .picker-head { padding-top: .75rem; }
+  }
+
+  /* ---- situations ---- */
+  .uses { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  @media (max-width: 1120px) { .uses { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .uses { grid-template-columns: 1fr; } }
+  .use { display: grid; gap: .5rem; align-content: start; }
+  .use.main { box-shadow: inset 0 0 0 2px var(--accent), var(--shadow); }
+  .use h3 { font-family: var(--serif); font-size: 1.45rem; font-weight: 500; letter-spacing: -.01em; line-height: 1.15; }
+  .use p { color: var(--ink-soft); font-size: .95rem; }
+  .aside-note { margin-top: 1.25rem; }
+
+  /* ---- ideas ---- */
+  .ideas { display: grid; gap: clamp(3rem, 6vw, 4.5rem); }
+  .idea { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+  @media (max-width: 860px) { .idea { grid-template-columns: 1fr; } }
+  .idea-text { display: grid; gap: .9rem; max-width: 34rem; }
+  .idea-text .num { color: var(--accent); margin-right: .35rem; }
+  .idea-text h3 { font-family: var(--serif); font-size: clamp(1.45rem, 2.6vw, 1.85rem); font-weight: 500; letter-spacing: -.01em; line-height: 1.15; }
+  .fig { display: grid; gap: 1rem; }
+  .fig-title { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  .fig-big { font-family: var(--serif); font-size: 1.7rem; line-height: 1.15; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .seg { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .seg button { font: inherit; font-size: .82rem; font-variant-numeric: tabular-nums; padding: .35rem .8rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft); cursor: pointer; }
+  .seg button:hover { color: var(--ink); border-color: var(--ink-soft); }
+  .seg button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; max-width: 20rem; }
+  .dots i { aspect-ratio: 1; border-radius: 50%; background: var(--dot); transition: background-color .35s ease; }
+  .dots i.in { background: var(--edge); }
+  .dots i.ok { background: var(--accent); }
+
+  .leaks { display: grid; gap: 1.1rem; }
+  .lk-row { display: grid; gap: .3rem; }
+  .lk-name { font-weight: 600; font-size: .92rem; }
+  .lk-bar { display: grid; grid-template-columns: minmax(0, 1fr) 3rem; gap: .6rem; align-items: center; font-size: .78rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .lk-bar b { font-weight: 600; color: var(--ink); text-align: right; }
+  .lk-t { height: 10px; border-radius: 5px; background: var(--dot); overflow: hidden; }
+  .lk-t i { display: block; height: 100%; min-width: 3px; border-radius: 5px; }
+  .lk-t i.f { background: var(--filter); } .lk-t i.w { background: var(--edge); }
+  .legend { display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; font-size: .78rem; color: var(--ink-soft); }
+  .legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .legend i { width: .65rem; height: .65rem; border-radius: 3px; }
+
+  .ffsvg { max-width: 100%; height: auto; display: block; }
+  .ffsvg .lab { fill: var(--ink-soft); font-size: 12px; font-family: var(--sans); }
+  .ffsvg .lab.small { font-size: 10px; }
+  .ffsvg .headf { fill: var(--dot); }
+  .ffsvg .body { fill: var(--dot); opacity: .8; }
+  .ffsvg .eye { fill: var(--ink-soft); opacity: .6; }
+  .ffsvg .mask { fill: var(--surface); stroke: var(--accent); stroke-width: 2.4; }
+  .ffsvg .strap { stroke: var(--accent); stroke-width: 1.6; opacity: .7; }
+  .ffsvg .port { fill: var(--ink); }
+  .ffsvg .tube { fill: none; stroke: var(--ink-soft); stroke-width: 3; stroke-linecap: round; opacity: .55; }
+  .ffsvg .lead { fill: none; stroke: var(--ink-soft); stroke-width: 1; opacity: .6; }
+  .ffsvg .win { fill: var(--bg); stroke: var(--line); stroke-width: 2; }
+  .ffsvg .mask-win { stroke: var(--accent); }
+  .ffsvg .room circle { fill: var(--ink-soft); opacity: .75; }
+  .ffsvg .inside { fill: var(--edge); }
+  .ffsvg .div { fill: var(--ink-soft); font-size: 30px; font-family: var(--sans); }
+  .ffsvg .val { fill: var(--ink); font-size: 16px; font-weight: 600; font-family: var(--sans); }
+  .ffsvg .val.in { fill: var(--edge); }
+  .ffsvg .gap { fill: none; stroke: var(--edge); stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 3 3; }
+  .ffsvg .beard { fill: var(--ink-soft); opacity: .45; }
+  .ffsvg .loop { fill: none; stroke: var(--ink-soft); stroke-width: 1.4; }
+  .ffsvg .mask.poor, .ffsvg .mask-win.poor { stroke: var(--edge); }
+  .ff-sum { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; font-variant-numeric: tabular-nums; }
+  .ff-sum b { color: var(--accent); }
+  .badge { font-size: .72rem; font-weight: 600; padding: .1rem .55rem; border-radius: 999px; }
+  .badge.pass { background: var(--accent-soft); color: var(--accent); }
+  .badge.fail { background: color-mix(in srgb, var(--edge) 15%, transparent); color: var(--edge); }
+
+  .time-ctl { display: grid; gap: .6rem; }
+  .time-ctl label { display: flex; justify-content: space-between; align-items: baseline; font-size: .9rem; font-weight: 500; }
+  .time-ctl output { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; margin: 0; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: linear-gradient(to right, var(--ink) var(--fill, 50%), var(--line) var(--fill, 50%)); }
+  input[type=range]::-moz-range-track { height: 4px; border-radius: 4px; background: var(--line); }
+  input[type=range]::-moz-range-progress { height: 4px; border-radius: 4px; background: var(--ink); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); border: 2px solid var(--ink); margin-top: -9px; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--surface); border: 2px solid var(--ink); }
+  .trows { display: grid; gap: .75rem; }
+  .trow { display: grid; gap: .3rem; }
+  .trow-top { display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; }
+  .trow-top span { color: var(--ink-soft); }
+  .trow-top b { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ttrack { height: 10px; border-radius: 5px; background: var(--dot); overflow: hidden; }
+  .ttrack i { display: block; height: 100%; border-radius: 5px; background: var(--accent); transition: width .25s ease; }
+  .ttrack i.none { background: var(--edge); }
+
+  /* ---- fit ---- */
+  .fit-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+  @media (max-width: 860px) { .fit-grid { grid-template-columns: 1fr; } }
+  .shapes { display: grid; gap: .8rem; }
+  .sh-row { display: grid; grid-template-columns: minmax(8.5rem, 11rem) minmax(0, 1fr) 2.6rem; gap: .75rem; align-items: center; font-size: .9rem; font-variant-numeric: tabular-nums; }
+  .sh-name { font-weight: 600; line-height: 1.2; }
+  .sh-name small { display: block; font-weight: 400; font-size: .75rem; color: var(--ink-soft); }
+  .sh-row b { text-align: right; font-weight: 600; }
+  .lk-t i.ok { background: var(--accent); }
+  @media (max-width: 600px) { .sh-row { grid-template-columns: minmax(0, 1fr) 2.6rem; row-gap: .3rem; } .sh-name { grid-column: 1 / -1; } }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; counter-reset: s; }
+  .steps li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: .25rem .75rem; counter-increment: s; }
+  .steps li::before { content: counter(s); grid-row: span 2; font-family: var(--serif); font-size: 1.6rem; line-height: 1; color: var(--accent); }
+  .steps b { font-weight: 600; }
+  .steps p { color: var(--ink-soft); font-size: .95rem; }
+  .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; margin-top: 1.25rem; }
+  .notes .card { display: grid; gap: .35rem; align-content: start; }
+  .notes p { color: var(--ink-soft); font-size: .92rem; }
+
+  /* ---- buy ---- */
+  .buy { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; }
+  .models { list-style: none; margin: .75rem 0 0; padding: 0; display: grid; }
+  .models li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .1rem 1rem; padding: .6rem 0; border-top: 1px solid var(--line); align-items: baseline; }
+  .models li:first-child { border-top: 0; }
+  .models b { font-weight: 600; }
+  .models span { grid-column: 1; font-size: .8rem; color: var(--ink-soft); }
+  .models a { grid-column: 2; grid-row: 1; font-size: .82rem; color: var(--accent); font-weight: 500; text-decoration: none; white-space: nowrap; }
+  .models a:hover { text-decoration: underline; }
+  .buy .card > p { color: var(--ink-soft); font-size: .9rem; margin-top: .2rem; }
+  .tips { display: grid; gap: .85rem; margin-top: .75rem; }
+  .tips p { color: var(--ink-soft); font-size: .92rem; }
+  .tips b { color: var(--ink); font-weight: 600; }
+
+  /* ---- names ---- */
+  .tablewrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: .65rem .9rem .65rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+  th { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; white-space: nowrap; }
+  td { font-weight: 600; }
+  th:last-child, td:last-child { padding-right: 0; }
+  td small { display: block; color: var(--ink-soft); font-size: .78rem; font-weight: 400; }
+  .marks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1rem 1.5rem; margin: 2rem 0 0; }
+  .marks dt { font-weight: 600; }
+  .marks dd { margin: .2rem 0 0; color: var(--ink-soft); font-size: .92rem; }
+
+  /* ---- sources ---- */
+  .sources { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 1.5rem 3rem; }
+  @media (max-width: 860px) { .sources { grid-template-columns: 1fr; } }
+  .sources p { color: var(--ink-soft); font-size: .95rem; }
+  .sources p + p { margin-top: .7rem; }
+  .srcs { margin: 0; padding-left: 1.1rem; display: grid; gap: .4rem; font-size: .85rem; color: var(--ink-soft); }
+  .foot { margin-top: clamp(3rem, 6vw, 5rem); padding-block: 1.25rem 2.5rem; border-top: 1px solid var(--line); font-size: .8rem; color: var(--ink-soft); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Sections">
+    <a class="brand" href="./">Respirator guide</a>
+    <span class="toc"><a href="#compare">Compare</a><a href="#choose">Choose</a><a href="#how">How it works</a><a href="#fit">Fit</a><a href="#buy">Buy</a><a href="#sources">Sources</a></span>
+  </nav>
+
+  <!-- ===== Answer + explorer ===== -->
+  <section id="compare">
+    <h1>Which mask should you wear?</h1>
+    <p class="lede">For most people: <b>an N95 or FFP2 with head straps, sealed to your face.</b> It is rated to let in no more than 1 in 10 airborne particles, and with a good seal usually lets in far fewer. A loose surgical mask lets in about 1 in 3, mostly round the edges.</p>
+
+    <div class="explorer">
+      <figure class="viz">
+        <div class="stage">
+          <canvas id="scene" role="img" aria-label="Particles drifting towards a face wearing the selected mask"></canvas>
+          <div class="readout" aria-live="polite">
+            <span class="n" id="ro-n">10</span>
+            <span class="u">in 100 particles get in<br><b id="ro-name">N95 / FFP2</b> · <span id="ro-pf">10×</span></span>
+          </div>
+        </div>
+        <figcaption class="key"><span><i></i>Caught by the mask</span><span><i class="f"></i>Through the filter</span><span><i class="e"></i>Round the edges</span></figcaption>
+      </figure>
+
+      <div>
+        <div class="picker-head kicker"><span>Pick a mask</span><span>Protection</span></div>
+        <ul class="picker" id="picker" aria-label="Masks, from least to most protective"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Situations ===== -->
+  <section class="block" id="choose">
+    <header>
+      <h2>Which one for you</h2>
+    </header>
+    <div class="uses">
+      <div class="card use main">
+        <span class="kicker">Most situations</span>
+        <h3>N95 or FFP2 with head straps</h3>
+        <p>Commuting, flights, shops, crowded rooms, a cold going round, wildfire smoke. Folded three-panel and moulded-cup shapes seal on the most faces. About $1 each; reuse one until it gets damp or dirty or the straps go slack.</p>
+      </div>
+      <div class="card use">
+        <span class="kicker">Long or heavy exposure</span>
+        <h3>Reusable half mask, or FFP3</h3>
+        <p>Caring for someone who is ill, hospital visits, an outbreak, days of smoke. A half mask with P100 or P3 filters costs about $40, usually seals better than a disposable and lasts for years.</p>
+      </div>
+      <div class="card use">
+        <span class="kicker">You have a beard</span>
+        <h3>Powered hood, or shave the seal line</h3>
+        <p>Stubble under the edge breaks the seal of any tight-fitting mask. A powered hood (PAPR) blows filtered air in and doesn't need a seal.</p>
+      </div>
+      <div class="card use">
+        <span class="kicker">You are the one who is ill</span>
+        <h3>Any respirator without a valve</h3>
+        <p>It filters your breath on the way out as well as on the way in. An exhalation valve lets some of your breath out unfiltered.</p>
+      </div>
+    </div>
+    <p class="small aside-note">All of these stop particles: dust, smoke, droplets, viruses and bacteria. None of them stop gases such as carbon monoxide.</p>
+  </section>
+
+  <!-- ===== How it works ===== -->
+  <section class="block" id="how">
+    <header>
+      <h2>How protection works</h2>
+      <p class="dek">Four ideas explain almost everything about masks.</p>
+    </header>
+
+    <div class="ideas">
+      <article class="idea">
+        <div class="idea-text">
+          <h3><span class="num">1</span>A protection factor is a divisor</h3>
+          <p>It compares the air outside the mask with the air you breathe inside it.</p>
+          <p class="formula">protection factor = particles outside ÷ particles inside</p>
+          <p>A 10× mask lets in a tenth: 10 particles out of every 100. Going from no mask to 10× keeps out 90 of them. Going from 10× to 20× keeps out only 5 more, but that still halves what you breathe, which matters when the exposure is long or heavy.</p>
+        </div>
+        <div class="card fig">
+          <span class="fig-title">Out of every 100 particles</span>
+          <div class="fig-big" id="r-big">10 get in</div>
+          <div class="dots" id="r-dots" aria-hidden="true"></div>
+          <div class="seg" id="r-seg" role="group" aria-label="Protection factor"></div>
+        </div>
+      </article>
+
+      <article class="idea">
+        <div class="idea-text">
+          <h3><span class="num">2</span>Leaks matter more than the filter</h3>
+          <p>Air takes the easiest path in: through the filter, or through gaps where the mask meets your face. Filters are very good. An FFP2 filter must stop at least 94 particles in 100 in the lab, and a P3 filter 9,995 in 10,000.</p>
+          <p>Yet a half mask with P3 filters is rated only twice as protective as an FFP2. The filter gets over 100 times better; what slips past the seal barely changes. That is why an FFP3 that gaps can protect you less than an FFP2 that seals.</p>
+        </div>
+        <div class="card fig">
+          <span class="fig-title">Most that can get in, per 1,000 particles</span>
+          <div class="leaks" id="leaks"></div>
+          <div class="legend"><span><i style="background:var(--filter)"></i>Through the filter alone</span><span><i style="background:var(--edge)"></i>Whole mask, worn on a face</span></div>
+        </div>
+      </article>
+
+      <article class="idea">
+        <div class="idea-text">
+          <h3><span class="num">3</span>A fit test measures your seal</h3>
+          <p>A fit test samples the air in the room and the air inside your mask while you breathe, talk and move your head. The ratio is your fit factor: for that mask, on your face.</p>
+          <p class="formula">fit factor = particles in the room ÷ particles inside the mask</p>
+          <p>To pass, a disposable respirator or half mask needs a fit factor of at least 100: ten times an N95’s 10× rating. The margin allows for straps slipping and talking in real life. Faces differ: one mask can score 300 on one person and 20 on another, so if a model leaks on you, try a different shape.</p>
+        </div>
+        <div class="card fig">
+          <div class="seg" id="ff-seg" role="group" aria-label="How well the mask fits">
+            <button type="button" data-ff="200" aria-pressed="true">Good seal</button>
+            <button type="button" data-ff="100" aria-pressed="false">Just passes</button>
+            <button type="button" data-ff="20" aria-pressed="false">Gap at the nose</button>
+            <button type="button" data-ff="5" aria-pressed="false">Beard or ear loops</button>
+          </div>
+          <svg class="ffsvg" viewBox="0 0 360 268" width="100%" role="img" id="ff-svg" aria-label="A fit test: one tube samples the room air, another samples the air inside the mask.">
+            <path class="body" d="M140 120 C150 112 166 110 180 110 C194 110 210 112 220 120 L232 132 L128 132 Z"/>
+            <rect class="body" x="168" y="92" width="24" height="22" rx="6"/>
+            <ellipse class="headf" cx="180" cy="60" rx="36" ry="44"/>
+            <ellipse class="eye" cx="167" cy="50" rx="4.5" ry="2.2"/><ellipse class="eye" cx="193" cy="50" rx="4.5" ry="2.2"/>
+            <path id="ff-beard" class="beard" d="M150 84 C148 108 162 122 180 124 C198 122 212 108 210 84 C204 104 194 112 180 112 C166 112 156 104 150 84 Z" visibility="hidden"/>
+            <path id="ff-mask" class="mask" d="M180 64 C164 64 152 74 151 86 C150 98 164 108 180 109 C196 108 210 98 209 86 C208 74 196 64 180 64 Z"/>
+            <g id="ff-straps"><line class="strap" x1="152" y1="80" x2="144" y2="66"/><line class="strap" x1="208" y1="80" x2="216" y2="66"/></g>
+            <g id="ff-loops" visibility="hidden"><path class="loop" d="M152 80 C142 74 140 66 145 60"/><path class="loop" d="M208 80 C218 74 220 66 215 60"/></g>
+            <g id="ff-gaps" visibility="hidden"><path class="gap" d="M164 68 C168 65 172 64 176 64"/><path class="gap" d="M184 64 C188 64 192 65 196 68"/></g>
+            <g id="ff-gaps2" visibility="hidden"><path class="gap" d="M152 82 C151 88 151 94 154 99"/><path class="gap" d="M208 82 C209 88 209 94 206 99"/></g>
+            <circle class="port" cx="194" cy="92" r="4"/>
+            <circle class="port" cx="62" cy="66" r="4"/>
+            <text x="62" y="52" class="lab" text-anchor="middle">Room air</text>
+            <text x="236" y="52" class="lab">Inside the mask</text>
+            <path class="lead" d="M234 56 C214 62 204 74 198 86"/>
+            <path class="tube" d="M62 70 C62 104 92 108 92 134"/>
+            <path class="tube" d="M194 96 C206 120 268 108 268 134"/>
+            <circle class="win" cx="92" cy="188" r="50"/>
+            <g class="room" id="ff-room"></g>
+            <circle class="win mask-win" cx="268" cy="188" r="50"/>
+            <g id="ff-in"></g>
+            <text x="180" y="198" class="div" text-anchor="middle">÷</text>
+            <text x="92" y="254" class="val" text-anchor="middle">8,000</text>
+            <text x="268" y="254" class="val in" text-anchor="middle" id="ff-inval">40</text>
+            <text x="92" y="266" class="lab small" text-anchor="middle">particles per cm³</text>
+            <text x="268" y="266" class="lab small" text-anchor="middle">particles per cm³</text>
+          </svg>
+          <div class="ff-sum"><span id="ff-sum">8,000 ÷ 40 = fit factor <b>200</b></span><span class="badge pass" id="ff-badge">Pass</span></div>
+          <p class="small" id="ff-note">1 in every 200 room particles gets inside.</p>
+        </div>
+      </article>
+
+      <article class="idea">
+        <div class="idea-text">
+          <h3><span class="num">4</span>Time adds up, and a mask slows the clock</h3>
+          <p>What you breathe in builds up the longer you stay. A mask divides it: 8 hours in a 10× respirator adds up to the same as 48 minutes with no mask. In a surgical mask, it is about 2 hours 40 minutes.</p>
+          <p>Two things speed the clock up: more particles in the air, as in a crowded, stuffy room or smoke, and breathing harder, as when exercising, singing or talking loudly.</p>
+        </div>
+        <div class="card fig">
+          <div class="time-ctl">
+            <label for="t-slider">Time in the same air <output id="t-out" for="t-slider">8 h</output></label>
+            <input type="range" id="t-slider" min="0" max="720" step="5" value="480">
+            <div class="seg" id="t-seg" role="group" aria-label="Examples">
+              <button type="button" data-min="30" aria-pressed="false">Bus ride</button>
+              <button type="button" data-min="180" aria-pressed="false">Dinner party</button>
+              <button type="button" data-min="480" aria-pressed="true">Long flight</button>
+              <button type="button" data-min="600" aria-pressed="false">Work day</button>
+            </div>
+          </div>
+          <div class="trows" id="t-rows"></div>
+          <p class="small">Each bar is the same dose shown as time with no mask, on a 12-hour scale.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== Fit ===== -->
+  <section class="block" id="fit">
+    <header>
+      <h2>Getting a good seal</h2>
+      <p class="dek">Fit matters more than the label. Head straps and a seal check do most of the work.</p>
+    </header>
+    <div class="fit-grid">
+      <div class="card fig">
+        <span class="fig-title">Fit tests passed, by design</span>
+        <div class="fig-big">Shape and straps decide the seal</div>
+        <div class="shapes" id="shapes"></div>
+        <p class="small">Share of over 18,000 fit tests that passed, pooled from 29 studies (Knobloch et al., Journal of Hospital Infection, 2023). Every design uses a similar filter.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem">Put it on right, every time</h3>
+        <ol class="steps">
+          <li><b>Head straps, not ear loops.</b><p>Top strap high on the back of your head, bottom strap round your neck below your ears.</p></li>
+          <li><b>Shape the nose clip with both hands.</b><p>Press from the bridge of your nose outwards. Pinching with one hand leaves gaps at the sides.</p></li>
+          <li><b>Check the seal.</b><p>Cup your hands over the mask and breathe out hard. Air at the edges or fogged glasses means it leaks: adjust and try again. Breathing in, the mask should pull in slightly.</p></li>
+          <li><b>Keep the edge on bare skin.</b><p>Stubble, hair or a scarf under the edge lets air bypass the filter.</p></li>
+        </ol>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="card"><h3>Valves</h3><p>Make breathing out easier, but let some of your breath out unfiltered. Skip them if you might be ill.</p></div>
+      <div class="card"><h3>Comfort</h3><p>Braided elastic straps are kinder to long hair than flat ones. If one shape leaks or rubs, try another: faces differ more than masks do.</p></div>
+      <div class="card"><h3>When to replace</h3><p>When the straps go slack, or it is damp, dirty, damaged or harder to breathe through.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== Buy ===== -->
+  <section class="block" id="buy">
+    <header>
+      <h2>What to buy</h2>
+      <p class="dek">Widely available models. We don't sell anything or earn from these links.</p>
+    </header>
+    <div class="buy">
+      <div class="card">
+        <h3>Disposable, with head straps</h3>
+        <p>N95, FFP2 or KN95. Start with a three-panel or cup shape: they seal on the most faces.</p>
+        <ul class="models" id="m-disposable"></ul>
+      </div>
+      <div class="card">
+        <h3>Reusable half masks</h3>
+        <p>Rubber or silicone, with replaceable filters</p>
+        <ul class="models" id="m-reusable"></ul>
+      </div>
+      <div class="card">
+        <h3>Spotting fakes</h3>
+        <div class="tips">
+          <p><b>N95:</b> “NIOSH” and an approval number (TC-84A-…) printed on the mask. You can look the number up on the <a href="https://www.cdc.gov/niosh/ppe/counterfeit_respirators/index.html" target="_blank" rel="noopener">CDC’s list</a>.</p>
+          <p><b>FFP2 and FFP3:</b> “EN 149” and a CE mark followed by a four-digit number.</p>
+          <p><b>KN95:</b> quality varies widely. Buy from known makers and sellers.</p>
+          <p><b>Skip FFP1 “dust masks”.</b> Rated 4×, they are too leaky for smoke or infections.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Names ===== -->
+  <section class="block" id="names">
+    <header>
+      <h2>Same mask, different names</h2>
+      <p class="dek">Each country has its own standard. The classes on each row are broadly equivalent for everyday particles.</p>
+    </header>
+    <div class="card tablewrap">
+      <table>
+        <thead><tr><th>Where</th><th>Everyday class</th><th>Higher class</th></tr></thead>
+        <tbody>
+          <tr><td>EU and UK<small>EN 149</small></td><td>FFP2<small>≥ 94%</small></td><td>FFP3<small>≥ 99%</small></td></tr>
+          <tr><td>United States<small>NIOSH</small></td><td>N95<small>≥ 95%</small></td><td>N99, N100<small>≥ 99%, 99.97%</small></td></tr>
+          <tr><td>China<small>GB 2626</small></td><td>KN95<small>≥ 95%</small></td><td>KN100<small>≥ 99.97%</small></td></tr>
+          <tr><td>South Korea<small>KMOEL</small></td><td>KF94<small>≥ 94%</small></td><td>KF99<small>≥ 99%</small></td></tr>
+          <tr><td>Australia and NZ<small>AS/NZS 1716</small></td><td>P2<small>≥ 94%</small></td><td>P3<small>≥ 99.95%</small></td></tr>
+          <tr><td>Japan<small>JMHLW</small></td><td>DS2<small>≥ 95%</small></td><td>DS3<small>≥ 99.9%</small></td></tr>
+        </tbody>
+      </table>
+      <p class="small" style="margin-top:.8rem">Percentages are the minimum share of test particles the filter must stop. A better filter barely helps a disposable: N99 and N100 masks are still rated 10×, because leaks at the seal set the limit.</p>
+    </div>
+    <dl class="marks">
+      <div><dt>N, R, P</dt><dd>US letters for oil resistance. N is fine for everything except oily mists.</dd></div>
+      <div><dt>NR and R</dt><dd>On EU masks: single shift only, or reusable.</dd></div>
+      <div><dt>D</dt><dd>Passed an extra dust-clogging test, so it stays easier to breathe through.</dd></div>
+      <div><dt>P100 and P3</dt><dd>The top filter classes for reusable masks: they stop at least 99.97% and 99.95% of test particles.</dd></div>
+    </dl>
+  </section>
+
+  <!-- ===== Sources ===== -->
+  <section class="block" id="sources">
+    <header><h2>Sources</h2></header>
+    <div class="sources">
+      <div>
+        <p>Protection factors are assigned ratings: the protection an employer can count on from a mask that has been fit-tested and is worn correctly. EU classes use UK HSE ratings and US classes use OSHA’s. Cloth and surgical figures are typical values from fit studies; the ear-loop figure is an estimate from fit-test pass rates.</p>
+        <p>In the animation, particles that get in are split between the filter and the edges to show the two paths; the total matches each mask’s rating.</p>
+      </div>
+      <ol class="srcs">
+        <li><a href="https://www.hse.gov.uk/pubns/priced/hsg53.pdf" target="_blank" rel="noopener">UK HSE, HSG53: Respiratory protective equipment at work</a> (assigned protection factors)</li>
+        <li><a href="https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.134" target="_blank" rel="noopener">US OSHA 29 CFR 1910.134</a> (assigned protection factors, fit-test pass levels)</li>
+        <li><a href="https://www.hse.gov.uk/pubns/indg479.pdf" target="_blank" rel="noopener">UK HSE, INDG479: Guidance on respiratory protective equipment fit testing</a></li>
+        <li><a href="https://multimedia.3m.com/mws/media/1791500O/comparison-ffp2-kn95-n95-filtering-facepiece-respirator-classes-tb.pdf" target="_blank" rel="noopener">3M: Comparison of FFP2, KN95, N95 and other filtering facepiece respirator classes</a></li>
+        <li><a href="https://www.ecfr.gov/current/title-42/chapter-I/subchapter-G/part-84" target="_blank" rel="noopener">US 42 CFR 84: NIOSH approval of respirators</a></li>
+        <li><a href="https://stacks.cdc.gov/view/cdc/199495" target="_blank" rel="noopener">Lawrence et al. (2006): N95 respirators and surgical masks in a simulated workplace</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/33300948/" target="_blank" rel="noopener">Clapp et al. (2021): fitted filtration of cloth and procedure masks, JAMA Internal Medicine</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/36738992/" target="_blank" rel="noopener">Knobloch et al. (2023): overview of respirator fit, Journal of Hospital Infection</a></li>
+        <li><a href="https://www.hse.gov.uk/safetybulletins/ear-loop-respirators.htm" target="_blank" rel="noopener">UK HSE safety bulletin (2022): ear-loop respirators</a></li>
+        <li><a href="https://glozematrix.substack.com/p/stop-using-ear-loop-ffp2-respirators" target="_blank" rel="noopener">Max Görlitz: Stop using ear-loop FFP2 respirators</a></li>
+        <li><a href="https://www.cdc.gov/niosh/publications/hcp/numbered/2021-107.html" target="_blank" rel="noopener">NIOSH (2021): how much exhalation valves let out</a></li>
+        <li><a href="https://www.cdc.gov/niosh/bulletin/2017/no-shave.html" target="_blank" rel="noopener">NIOSH: facial hair and respirators</a></li>
+        <li><a href="https://www.cdc.gov/niosh/ppe/counterfeit_respirators/index.html" target="_blank" rel="noopener">CDC: counterfeit respirators and how to spot them</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <footer class="foot"><span>Respirator guide · updated October 2026</span><a href="#compare">Back to top ↑</a></footer>
+</div>
+
+<script src="shared.js?v=20261029b"></script>
+<script>
+(() => {
+  const { MASKS, MODELS, createScene } = window.RG;
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- explorer: one row per mask; picking one updates the face, the readout and opens its details ----
+  const getsIn = (m) => 100 / m.pf;
+  const fmtIn = (v) => v >= 10 ? String(Math.round(v)) : String(Math.round(v * 10) / 10);
+  const scene = createScene($('scene'));
+  const picker = $('picker');
+  const rows = MASKS.map((m) => {
+    const li = el('li', 'opt'); li.dataset.id = m.id;
+    const b = el('button'); b.type = 'button'; b.setAttribute('aria-controls', `d-${m.id}`);
+    const name = el('span', 'o-name', m.name);
+    if (m.tag) name.appendChild(el('span', `tag ${m.tag}`, m.tag === 'best' ? 'Best for most' : 'Rarely seals'));
+    if (m.sub) name.appendChild(el('span', 'o-sub', m.sub));
+    const bar = el('span', 'o-bar'), track = el('span', 'o-track'), fill = el('i');
+    fill.style.width = `${getsIn(m)}%`; track.appendChild(fill);
+    bar.append(track, el('span', null, `${fmtIn(getsIn(m))} in 100 get in`));
+    b.append(name, el('span', 'o-pf', m.pfLabel), bar);
+    const d = el('div', 'o-detail'); d.id = `d-${m.id}`; d.hidden = true;
+    d.appendChild(el('p', null, m.note));
+    if (m.meta) d.appendChild(el('p', 'meta', m.meta));
+    if (m.models) { const a = el('a', null, 'Models to look for ↓'); a.href = '#buy'; d.appendChild(a); }
+    li.append(b, d); picker.appendChild(li);
+    b.addEventListener('click', () => select(m.id));
+    b.addEventListener('keydown', (e) => {
+      const k = MASKS.indexOf(m), next = e.key === 'ArrowDown' ? k + 1 : e.key === 'ArrowUp' ? k - 1 : -1;
+      if (next < 0 || next >= MASKS.length) return;
+      e.preventDefault(); select(MASKS[next].id); rows[next].b.focus();
+    });
+    return { m, li, b, d };
+  });
+  function select(id) {
+    const m = MASKS.find((x) => x.id === id);
+    rows.forEach((r) => { const on = r.m === m; r.li.toggleAttribute('data-on', on); r.b.setAttribute('aria-expanded', String(on)); r.d.hidden = !on; });
+    $('ro-n').textContent = fmtIn(getsIn(m));
+    $('ro-name').textContent = m.short;
+    $('ro-pf').textContent = m.pfLabel;
+    $('scene').setAttribute('aria-label', m.id === 'none' ? 'No mask: every particle reaches the nose and mouth' : `${m.name}: about ${fmtIn(getsIn(m))} in 100 particles get in, most of them round the edges`);
+    scene.setMask(m);
+  }
+  select('ffp2');
+
+  // ---- 1 · the divisor: 100 dots and a protection factor ----
+  const dots = (host, n) => { for (let i = 0; i < n; i++) host.appendChild(el('i')); return [...host.children]; };
+  const rDots = dots($('r-dots'), 100);
+  const PFS = [1, 2, 5, 10, 20, 50];
+  const drawRatio = (pf) => {
+    const n = Math.round(100 / pf);
+    $('r-big').textContent = pf === 1 ? 'All 100 get in' : `${n} get in, ${100 - n} kept out`;
+    rDots.forEach((c, i) => c.classList.toggle('in', i < n));
+    $('r-seg').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.pf === pf)));
+  };
+  PFS.forEach((pf) => {
+    const b = el('button', null, pf === 1 ? 'No mask' : `${pf}×`); b.type = 'button'; b.dataset.pf = pf;
+    b.addEventListener('click', () => drawRatio(pf)); $('r-seg').appendChild(b);
+  });
+  drawRatio(10);
+
+  // ---- 2 · filter vs whole mask, per 1,000 particles (filter: standard's limit; whole mask: UK HSE rating) ----
+  const LEAKS = [['FFP2 (≈ N95)', 60, 100], ['FFP3', 10, 50], ['Half mask, P3 filters', .5, 50], ['Full-face mask, P3 filters', .5, 25]];
+  LEAKS.forEach(([name, f, w]) => {
+    const row = el('div', 'lk-row'); row.appendChild(el('span', 'lk-name', name));
+    [['f', f], ['w', w]].forEach(([cls, v]) => {
+      const line = el('div', 'lk-bar'), t = el('div', 'lk-t'), i = el('i', cls);
+      i.style.width = `${v}%`; t.appendChild(i);
+      line.append(t, el('b', null, String(v))); row.appendChild(line);
+    });
+    $('leaks').appendChild(row);
+  });
+
+  // ---- 3 · fit factor: the mask sample, drawing and result change with the fit ----
+  const NS = 'http://www.w3.org/2000/svg';
+  let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const disc = (cx, cy, n, r) => Array.from({ length: n }, () => { const a = rnd() * Math.PI * 2, d = Math.sqrt(rnd()) * r; return [cx + Math.cos(a) * d, cy + Math.sin(a) * d]; });
+  const circles = (pts, cls, r) => pts.map(([x, y], k) => { const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('r', typeof r === 'function' ? r(k) : r); if (cls) c.setAttribute('class', cls); return c; });
+  $('ff-room').replaceChildren(...circles(disc(92, 188, 170, 45), null, (k) => [1.6, 1.8, 2, 2.3][k % 4]));
+  const FITS = {
+    200: { note: '1 in every 200 room particles gets inside.', gaps: 0 },
+    100: { note: '1 in every 100 gets inside: exactly the pass mark.', gaps: 0 },
+    20: { note: 'A gap at the nose lets unfiltered air in: 1 in every 20 gets inside.', gaps: 1 },
+    5: { note: 'Stubble under the edge, or ear loops pulling it loose, break the seal: 1 in every 5 gets inside.', gaps: 2 },
+  };
+  const fitDots = {}; [200, 100, 20, 5].forEach((ff) => { seed = 3 + ff; fitDots[ff] = disc(268, 188, Math.round(200 / ff), 44); });
+  const drawFit = (ff) => {
+    const f = FITS[ff], inside = 8000 / ff, pass = ff >= 100;
+    $('ff-in').replaceChildren(...circles(fitDots[ff], 'inside', fitDots[ff].length > 10 ? 2.2 : 3.4));
+    $('ff-inval').textContent = inside.toLocaleString('en-US');
+    $('ff-sum').replaceChildren(document.createTextNode(`8,000 ÷ ${inside.toLocaleString('en-US')} = fit factor `), el('b', null, String(ff)));
+    $('ff-badge').textContent = pass ? 'Pass' : 'Fail'; $('ff-badge').className = 'badge ' + (pass ? 'pass' : 'fail');
+    $('ff-note').textContent = f.note;
+    $('ff-mask').classList.toggle('poor', !pass);
+    document.querySelector('.ffsvg .mask-win').classList.toggle('poor', !pass);
+    $('ff-gaps').setAttribute('visibility', f.gaps >= 1 ? 'visible' : 'hidden');
+    ['ff-gaps2', 'ff-beard', 'ff-loops'].forEach((id) => $(id).setAttribute('visibility', f.gaps >= 2 ? 'visible' : 'hidden'));
+    $('ff-straps').setAttribute('visibility', f.gaps >= 2 ? 'hidden' : 'visible');
+    $('ff-svg').setAttribute('aria-label', `Fit test: 8,000 particles per cubic centimetre in the room, ${inside.toLocaleString('en-US')} inside the mask, a fit factor of ${ff}. ${pass ? 'Pass' : 'Fail'}.`);
+    $('ff-seg').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.ff === ff)));
+  };
+  $('ff-seg').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => drawFit(+b.dataset.ff)));
+  drawFit(200);
+
+  // ---- 4 · time: each mask's dose shown as time with no mask ----
+  const TMASKS = [['No mask', 1], ['Surgical mask', 3], ['N95 or FFP2', 10], ['FFP3 or half mask', 20], ['Full-face mask', 40]];
+  const MAXMIN = 720;
+  const fmt = (m) => { m = Math.round(m); if (m < 1) return 'under 1 min'; if (m < 60) return `${m} min`; const h = Math.floor(m / 60), r = m % 60; return r ? `${h} h ${r} min` : `${h} h`; };
+  const tRows = TMASKS.map(([name, pf]) => {
+    const row = el('div', 'trow'), top = el('div', 'trow-top'), v = el('b'), track = el('div', 'ttrack'), fill = el('i', pf === 1 ? 'none' : '');
+    top.append(el('span', null, pf > 1 ? `${name} · ${pf === 3 ? '~3' : pf}×` : name), v); track.appendChild(fill); row.append(top, track);
+    $('t-rows').appendChild(row); return { pf, v, fill };
+  });
+  const slider = $('t-slider');
+  const setTime = (min) => {
+    slider.value = min; slider.style.setProperty('--fill', `${min / MAXMIN * 100}%`);
+    $('t-out').textContent = min === 0 ? '0 h' : fmt(min);
+    slider.setAttribute('aria-valuetext', fmt(min));
+    tRows.forEach((r) => { const eq = min / r.pf; r.fill.style.width = `${eq / MAXMIN * 100}%`; r.v.textContent = min === 0 ? '—' : r.pf === 1 ? fmt(eq) : `like ${fmt(eq)} unmasked`; });
+    $('t-seg').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.min === min)));
+  };
+  slider.addEventListener('input', () => setTime(+slider.value));
+  $('t-seg').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => setTime(+b.dataset.min)));
+  setTime(480);
+
+  // ---- fit-test pass rates by design (Knobloch et al. 2023): [design, example, % passed, tests] ----
+  const SHAPES = [
+    ['Three-panel folded', 'e.g. 3M Aura', 80.8, 4625],
+    ['Moulded cup', 'e.g. 3M 8210', 72.4, 8234],
+    ['Duckbill', 'head straps', 31.6, 2120],
+    ['Flat-fold', 'head straps', 30.9, 3392],
+    ['Any shape, ear loops', '', 3.6, 222],
+  ];
+  SHAPES.forEach(([name, eg, pct, n]) => {
+    const row = el('div', 'sh-row'), lab = el('span', 'sh-name', name), t = el('div', 'lk-t'), i = el('i', pct > 50 ? 'ok' : 'w');
+    if (eg) lab.appendChild(el('small', null, eg));
+    i.style.width = `${pct}%`; t.appendChild(i);
+    row.title = `${pct}% of ${n.toLocaleString('en-US')} fit tests passed`;
+    row.append(lab, t, el('b', null, `${Math.round(pct)}%`)); $('shapes').appendChild(row);
+  });
+
+  // ---- models ----
+  Object.entries(MODELS).forEach(([key, items]) => {
+    $(`m-${key}`).replaceChildren(...items.map((p) => {
+      const li = el('li'), a = el('a', null, `${p.where} ↗`);
+      a.href = p.url; a.target = '_blank'; a.rel = 'noopener';
+      li.append(el('b', null, p.name), a, el('span', null, p.tag)); return li;
+    }));
+  });
+})();
+</script>
+</body>
+</html>

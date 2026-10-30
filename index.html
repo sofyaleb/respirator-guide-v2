@@ -124,6 +124,12 @@
     .picker-head { order: 1; } .picker { order: 2; } .about { order: 3; min-height: 0; } .models-panel { order: 4; margin-top: 0; }
     .info { padding: .6rem var(--gutter) .75rem; gap: .4rem; }
     .info-name .o-sub, .key .long { display: none; }
+    /* the pinned card keeps one height for every mask, so the list never shifts: one-line name, fixed columns, room for the belt line */
+    .info-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #i-tag { display: none; }
+    .stats { grid-template-columns: 4.8rem 5.4rem minmax(0, 1fr); gap: .6rem; }
+    .stats dd { min-height: calc(1.6em + 1.2rem); }
+    .stats dd small { white-space: nowrap; }
     .stage { aspect-ratio: auto; height: min(32vh, 58vw); }
     .key { padding: .55rem var(--gutter) .65rem; font-size: .7rem; gap: .25rem .75rem; }
     .readout { left: var(--gutter); }

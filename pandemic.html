@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stopping a Pandemic</title>
+<meta name="description" content="Why good respirators, worn by everyone who has to keep working, could stop even a worst-case airborne pandemic, and what it would cost.">
+<meta property="og:title" content="Good respirators could stop even a worst-case pandemic">
+<meta property="og:description" content="Who would need one, how much protection is enough, and what a stockpile would cost.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+  /* A long read: the claim and three headline numbers, then the argument, with each table or tool beside the text that raises it. */
+  :root {
+    --bg: #f4f5f3; --surface: #ffffff; --ink: #121a1d; --ink-soft: #5b676b; --line: #e0e4e3; --dot: #e2e6e5;
+    --accent: #0d7a72; --accent-soft: #d6ebe8; --caught: #2f9e44; --filter: #d28a1e; --edge: #d2453b;
+    --shadow: 0 1px 2px rgba(18,26,29,.04), 0 10px 30px rgba(18,26,29,.06);
+    --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --gutter: max(16px, env(safe-area-inset-left, 0px));
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1416; --surface: #162023; --ink: #e8eeee; --ink-soft: #97a5a9; --line: #263134; --dot: #243033;
+      --accent: #3cc2b5; --accent-soft: #163b38; --caught: #5fd27a; --filter: #f0a83c; --edge: #ff6b5c; --shadow: 0 0 0 1px #1f2a2d;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1416; --surface: #162023; --ink: #e8eeee; --ink-soft: #97a5a9; --line: #263134; --dot: #243033;
+    --accent: #3cc2b5; --accent-soft: #163b38; --caught: #5fd27a; --filter: #f0a83c; --edge: #ff6b5c; --shadow: 0 0 0 1px #1f2a2d;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .gens i, .scale-track i { transition: none !important; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  p { margin: 0; }
+  .wrap { max-width: 72rem; margin-inline: auto; padding-inline: var(--gutter); }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem 1.5rem; flex-wrap: wrap; padding-block: 1.25rem; font-size: .875rem; }
+  .brand { font-weight: 600; text-decoration: none; letter-spacing: -.01em; }
+  .toc { display: flex; flex-wrap: wrap; gap: .25rem 1.1rem; }
+  .toc a { color: var(--ink-soft); text-decoration: none; }
+  .toc a:hover, .toc a[aria-current="page"] { color: var(--ink); }
+
+  h1, h2 { font-weight: 500; letter-spacing: -.02em; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.25rem, 5.5vw, 3.5rem); line-height: 1.05; letter-spacing: -.03em; max-width: 18ch; margin-top: clamp(1rem, 4vw, 2.5rem); }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.15; }
+  h2 .num { color: var(--accent); margin-right: .4rem; }
+  h3 { font-size: 1.05rem; font-weight: 600; line-height: 1.3; margin: 0; }
+  .lede { font-size: clamp(1.08rem, 1.7vw, 1.3rem); line-height: 1.5; color: var(--ink-soft); max-width: 40rem; margin-top: 1.1rem; }
+  .credit { font-size: .88rem; color: var(--ink-soft); max-width: 40rem; margin-top: .9rem; }
+  .kicker { font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
+  .small { font-size: .82rem; color: var(--ink-soft); line-height: 1.5; }
+  .card { background: var(--surface); border-radius: 18px; box-shadow: var(--shadow); padding: 1.25rem; min-width: 0; }
+  .formula { font-variant-numeric: tabular-nums; background: var(--accent-soft); border-radius: 10px; padding: .55rem .85rem; font-weight: 500; font-size: .95rem; justify-self: start; }
+  .callout { border-left: 3px solid var(--accent); padding-left: .9rem; font-size: .95rem; color: var(--ink-soft); }
+  .callout.warn { border-color: var(--edge); }
+  .callout b { color: var(--ink); font-weight: 600; }
+
+  .summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+  @media (max-width: 760px) { .summary { grid-template-columns: 1fr; } }
+  .summary .card { display: grid; gap: .3rem; align-content: start; }
+  .summary b { font-size: 1.7rem; font-weight: 500; letter-spacing: -.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .summary span { font-size: .92rem; color: var(--ink-soft); }
+  .jump { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
+  .jump a { font-size: .82rem; padding: .3rem .8rem; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); text-decoration: none; }
+  .jump a:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+  .sec { padding-top: clamp(3.5rem, 7vw, 5.5rem); scroll-margin-top: 0; }
+  .split { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+  @media (max-width: 920px) { .split { grid-template-columns: 1fr; } }
+  .text { display: grid; gap: .9rem; max-width: 40rem; align-content: start; }
+  .text ul, .text ol { margin: 0; padding-left: 1.2rem; display: grid; gap: .45rem; }
+  .text li b, .text p b { font-weight: 600; }
+
+  .tool { display: grid; gap: 1.1rem; }
+  .ctl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1rem; }
+  .ctl { display: grid; gap: .45rem; align-content: start; }
+  .seg { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .seg button { font: inherit; font-size: .82rem; padding: .35rem .8rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft); cursor: pointer; }
+  .seg button:hover { color: var(--ink); border-color: var(--ink-soft); }
+  .seg button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .check { display: flex; gap: .55rem; align-items: baseline; font-size: .92rem; cursor: pointer; }
+  .check input { accent-color: var(--accent); width: 1.05rem; height: 1.05rem; flex: none; transform: translateY(2px); }
+  .check small { color: var(--ink-soft); font-size: .8rem; }
+  .outcome { display: grid; gap: .9rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  .r-line { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; margin-top: .15rem; }
+  .big { font-size: 2.2rem; font-weight: 500; letter-spacing: -.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .verdict { font-size: .75rem; font-weight: 600; letter-spacing: .03em; padding: .15rem .6rem; border-radius: 999px; }
+  .verdict.ok { background: color-mix(in srgb, var(--caught) 18%, transparent); color: var(--caught); }
+  .verdict.bad { background: color-mix(in srgb, var(--edge) 15%, transparent); color: var(--edge); }
+  .verdict.mid { background: color-mix(in srgb, var(--filter) 18%, transparent); color: var(--filter); }
+  .gens { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .35rem; align-items: end; height: 140px; margin-top: .5rem; }
+  .gens div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: .2rem; height: 100%; min-width: 0; }
+  .gens i { display: block; width: 100%; border-radius: 6px 6px 2px 2px; background: var(--edge); transition: height .4s ease, background-color .3s; min-height: 3px; }
+  .gens i.down { background: var(--caught); }
+  .gens span { font-size: .68rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .gens b { font-size: .7rem; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .tbl { width: 100%; border-collapse: collapse; font-size: .9rem; font-variant-numeric: tabular-nums; }
+  .tbl th, .tbl td { text-align: left; padding: .6rem .75rem .6rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .tbl th:last-child, .tbl td:last-child { padding-right: 0; }
+  .tbl th { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
+  .tbl tbody tr:last-child td { border-bottom: 0; }
+  .tbl td b { font-weight: 600; }
+  .tbl tr.hi td { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+  .tbl tr.hi td:first-child { box-shadow: -.5rem 0 0 color-mix(in srgb, var(--accent) 10%, transparent); }
+  .tbl tr.hi td:last-child { box-shadow: .5rem 0 0 color-mix(in srgb, var(--accent) 10%, transparent); }
+  .num-col { white-space: nowrap; }
+  .card > .small:not(:first-child), .card > .callout { margin-top: .9rem; }
+  .tool > .small, .tool > .callout { margin-top: 0; }
+  /* on phones the cost table keeps the mask, cost per day and total */
+  @media (max-width: 560px) { #cost-table th:nth-child(2), #cost-table td:nth-child(2), #cost-table th:nth-child(3), #cost-table td:nth-child(3) { display: none; } }
+
+  .scale { position: relative; height: 5.4rem; margin: .4rem .9rem 0; }
+  .scale-track { position: absolute; left: 0; right: 0; top: 2.5rem; height: 12px; border-radius: 6px; background: var(--dot); overflow: hidden; }
+  .scale-track i { display: block; height: 100%; background: var(--accent); border-radius: 6px; transition: width .4s ease; }
+  .target { position: absolute; top: 0; transform: translateX(-50%); display: grid; justify-items: center; font-size: .68rem; color: var(--ink-soft); white-space: nowrap; }
+  .target::after { content: ""; width: 2px; height: 1.6rem; background: var(--ink-soft); opacity: .6; margin-top: .1rem; }
+  .target.met { color: var(--caught); font-weight: 600; }
+  .target.met::after { background: var(--caught); opacity: 1; }
+  .ticks { position: absolute; left: 0; right: 0; top: 3.9rem; font-size: .68rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .ticks span { position: absolute; transform: translateX(-50%); }
+  @media (max-width: 360px) { .target, .ticks { font-size: .6rem; } }
+
+  .n-in { font: inherit; font-size: .95rem; padding: .4rem .6rem; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 11rem; max-width: 100%; font-variant-numeric: tabular-nums; }
+
+  .you { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-top: 1rem; }
+  .you .card { display: grid; gap: .35rem; align-content: start; }
+  .you p { color: var(--ink-soft); font-size: .92rem; }
+  .go { font-weight: 600; color: var(--accent); text-decoration: none; }
+  .go:hover { text-decoration: underline; }
+  .links { display: flex; flex-wrap: wrap; gap: .4rem 1.5rem; margin-top: 1.25rem; }
+
+  .sources { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 1.5rem 3rem; margin-top: 1.25rem; }
+  @media (max-width: 860px) { .sources { grid-template-columns: 1fr; } }
+  .sources p { color: var(--ink-soft); font-size: .95rem; }
+  .sources p + p { margin-top: .7rem; }
+  .srcs { margin: 0; padding-left: 1.1rem; display: grid; gap: .4rem; font-size: .85rem; color: var(--ink-soft); }
+  .foot { margin-top: clamp(3rem, 6vw, 5rem); padding-block: 1.25rem 2.5rem; border-top: 1px solid var(--line); font-size: .8rem; color: var(--ink-soft); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Pages">
+    <a class="brand" href="./">Respirator guide</a>
+    <span class="toc"><a href="./">Which mask</a><a href="./#how">How it works</a><a href="time.html">Exposure clock</a><a href="pandemic.html" aria-current="page">Stopping a pandemic</a></span>
+  </nav>
+
+  <header id="top">
+    <span class="kicker">Stopping a pandemic</span>
+    <h1>Good respirators could stop even a worst-case pandemic</h1>
+    <p class="lede">If everyone who has to keep working wore a well-fitting respirator, and everyone else stayed home for a while, even a very contagious, very deadly airborne virus would stop spreading. That buys time for vaccines.</p>
+    <p class="credit">This page explains the argument in <a href="https://defensesindepth.bio/universal-respirator-usage-stops-worst-case-pandemics/" target="_blank" rel="noopener">“Universal respirator usage stops worst-case pandemics”</a> by Constantin Arnscheidt and Damon Binder (Defenses in Depth, October 2026), with workforce and supply figures from two RAND reports.</p>
+    <div class="summary">
+      <div class="card"><b>R below 1</b><span>The goal. When each case infects fewer than one other person on average, an outbreak dies out.</span></div>
+      <div class="card"><b>About 18×</b><span>The group protection factor the authors estimate is enough for essential workers, even against a virus as contagious as measles.</span></div>
+      <div class="card"><b>~$60M a year</b><span>Roughly what it would cost the US to keep 20 million reusable respirators ready: under 0.001% of federal spending.</span></div>
+    </div>
+    <nav class="jump" aria-label="On this page">
+      <a href="#worst">The worst case</a><a href="#r">R below 1</a><a href="#workers">Who needs one</a><a href="#airborne">Airborne</a><a href="#respirators">Respirators</a><a href="#enough">How much is enough</a><a href="#air">Air cleaning</a><a href="#cost">Cost</a><a href="#supply">Supply</a><a href="#you">For you</a><a href="#sources">Sources</a>
+    </nav>
+  </header>
+
+  <section class="sec text" id="worst">
+    <h2><span class="num">1</span>COVID-19 was bad. It was not the worst case.</h2>
+    <p>The original COVID-19 virus killed roughly 1 in 200 of the people it infected. SARS in 2003 killed about 1 in 10, but it was contained after fewer than 10,000 cases. Smallpox was both contagious and deadly: its first epidemics may have killed about a third of the population in some places.</p>
+    <p>The authors worry that advances in biotechnology and AI could make it easier to engineer a virus that is both. Preventing that matters most, but it is worth having a plan if it happens anyway.</p>
+    <p>Vaccines take months to develop and make at scale. Respirators can hold the line until then, because they work against any airborne virus and can be made and stored in advance.</p>
+  </section>
+
+  <section class="sec split" id="r">
+    <div class="text">
+      <h2><span class="num">2</span>Push R below 1 and the outbreak dies out</h2>
+      <p><b>R</b> is how many people, on average, each infected person goes on to infect. Above 1, cases multiply each generation. Below 1, the outbreak fizzles out. With nobody immune or protected, it is roughly 1.5 to 6.5 for the original COVID-19 virus, 3.5 to 6 for smallpox and 12 to 18 for measles.</p>
+      <p>A mask cuts R twice: it stops some of what you breathe in, and if the infected person wears one too, some of what they breathe out.</p>
+      <p class="formula">Everyone in a mask of protection factor PF cuts R by PF × PF</p>
+      <p>That is why universal wearing is so powerful: a group protection factor of 18, worn by everyone, cuts transmission about 324 times.</p>
+    </div>
+    <div class="card tool" id="sim">
+      <div class="ctl-grid">
+        <div class="ctl"><span class="kicker">Virus</span><div class="seg" id="sim-virus" role="group" aria-label="Virus"></div></div>
+        <div class="ctl"><span class="kicker">What everyone wears</span><div class="seg" id="sim-mask" role="group" aria-label="Mask"></div></div>
+        <div class="ctl"><span class="kicker">Protection numbers</span><div class="seg" id="sim-mode" role="group" aria-label="Which protection numbers"></div></div>
+        <div class="ctl"><span class="kicker">Worn in shared air</span><div class="seg" id="sim-wear" role="group" aria-label="Share of the time it is worn"></div></div>
+      </div>
+      <label class="check"><input type="checkbox" id="sim-source" checked> Infected people wear one too</label>
+      <div class="outcome" aria-live="polite">
+        <div><span class="kicker">R with masks</span><div class="r-line"><span class="big" id="sim-r">—</span><span class="verdict" id="sim-verdict">—</span></div></div>
+        <div><span class="kicker">Cases in each generation, starting from 100</span><div class="gens" id="sim-gens" aria-hidden="true"></div></div>
+      </div>
+      <p class="small" id="sim-note"></p>
+    </div>
+  </section>
+
+  <section class="sec split" id="workers">
+    <div class="text">
+      <h2><span class="num">3</span>Most people stay home. Essential workers mask up.</h2>
+      <p>An airborne virus has to get from one person to another through shared air. If every household kept to itself, it would stop. But someone has to keep the power on, move food and medicine, run hospitals and make the vaccines. The authors’ “minimum viable” plan:</p>
+      <ol>
+        <li>As soon as a dangerous new virus is detected, people who don’t need to go to work stay home.</li>
+        <li>Essential workers keep working, in good respirators whenever they share air, so that R among them stays below 1.</li>
+        <li>This holds until vaccines, treatments or better tests arrive.</li>
+      </ol>
+      <p>US estimates of essential workers range from about 10 to 30 million. RAND went occupation by occupation, because risk differs a lot within a sector: a hospital nurse and a hospital accountant face very different exposure. About 39% of critical-sector workers could work from home.</p>
+    </div>
+    <div class="card">
+      <span class="kicker">US workers who would need protection</span>
+      <table class="tbl">
+        <thead><tr><th scope="col">Who counts as essential</th><th scope="col">Workers</th></tr></thead>
+        <tbody>
+          <tr><td>Everyone working in critical sectors</td><td class="num-col">85.7 million</td></tr>
+          <tr><td>Critical sectors, leaving out those who can work from home</td><td class="num-col"><b>52 million</b></td></tr>
+          <tr><td>…who also face above-average exposure</td><td class="num-col">27 million</td></tr>
+          <tr><td>Lifeline sectors only (health care, utilities, food manufacturing, education, critical retail), on site</td><td class="num-col">24.6 million</td></tr>
+          <tr><td>Health care workers who must be on site</td><td class="num-col">14.3 million</td></tr>
+          <tr><td>Above-average exposure <i>and</i> above-average importance to the rest of the economy</td><td class="num-col"><b>5.3 million</b></td></tr>
+        </tbody>
+      </table>
+      <p class="small">Even with no pandemic, 8 to 10 million US workers already need specialised protective equipment, which sets a floor for how much has to be made. Source: <a href="https://www.rand.org/pubs/research_reports/RRA5083-1.html" target="_blank" rel="noopener">RAND (2026)</a>.</p>
+    </div>
+  </section>
+
+  <section class="sec text" id="airborne">
+    <h2><span class="num">4</span>The worst case is probably airborne</h2>
+    <p>A virus that spreads fast enough to be a worst case will most likely spread through the air: it is much harder to avoid breathing shared air than to avoid contaminated food, touching people or mosquito bites.</p>
+    <p>People breathe out particles of all sizes. Big ones fall within a few metres; small ones drift across a room for much longer. COVID-19, flu, colds and measles all spread substantially through the air, and smallpox probably did too. Block airborne spread and the other routes are easier to deal with.</p>
+  </section>
+
+  <section class="sec split" id="respirators">
+    <div class="text">
+      <h2><span class="num">5</span>How respirators get there</h2>
+      <p>A protection factor is how many times less you breathe in. Two things limit it:</p>
+      <ul>
+        <li><b>Leaks round the edges.</b> If 1 in 20 breaths of air slips past the seal, the mask can never do better than 20×, however good the filter.</li>
+        <li><b>Time off.</b> A mask worn 95% of the time in shared air can never do better than 20×, because the other 5% gets in unfiltered.</li>
+      </ul>
+      <p>Official ratings, the ones the rest of this guide uses, are deliberately cautious. Studies of groups wearing respirators through a working day usually find more. What matters for stopping spread is the group’s average, worked out so that a few badly fitting masks pull it down a lot.</p>
+    </div>
+    <div class="card">
+      <table class="tbl">
+        <thead><tr><th scope="col">Type</th><th scope="col">Official rating</th><th scope="col">Measured in groups</th></tr></thead>
+        <tbody>
+          <tr><td><b>Surgical mask</b></td><td>No rating; ~3× in studies</td><td>—</td></tr>
+          <tr><td><b>Disposable respirator</b> (N95, FFP2, KN95)</td><td>10×</td><td><b>15–40×</b></td></tr>
+          <tr class="hi"><td><b>Reusable half mask</b> with P100 or P3 filters</td><td>10× (US) to 20× (UK)</td><td><b>30–70×</b>, possibly over 100× with training and fit testing</td></tr>
+          <tr><td><b>Full-face mask</b></td><td>40–50×</td><td>—</td></tr>
+          <tr><td><b>Powered respirator</b> (PAPR)</td><td>20–50×, by type</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="callout"><b>Exhalation valves give up part of the benefit.</b> A valve lets some of the wearer’s breath out unfiltered, weakening the “infected person wears one too” half of PF × PF. Pick a mask without a valve, or fit a filter over it.</p>
+    </div>
+  </section>
+
+  <section class="sec split" id="enough">
+    <div class="text">
+      <h2><span class="num">6</span>How much protection is enough?</h2>
+      <p>The authors built a deliberately pessimistic model: an infectious worker at their most contagious, sharing an office for a 50-hour week. Because everyone wears a mask, the protection factor needed is the square root of how contagious the virus could be in that setting.</p>
+      <p>Even the most extreme case needs about 64×, which a well-fitted reusable respirator can reach. Protection factors below 18 could have stopped the original COVID-19 virus, if everyone had worn them consistently. Wearing them consistently is the hard part.</p>
+    </div>
+    <div class="card">
+      <table class="tbl">
+        <thead><tr><th scope="col">How infectious the virus is</th><th scope="col">Upper bound on spread at work</th><th scope="col">Group protection needed</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>As infectious as measles, one of the most transmissible viruses known</td><td>~320 people per case</td><td class="num-col"><b>about 18×</b></td></tr>
+          <tr><td>10 times more</td><td>~1,170</td><td class="num-col">about 35×</td></tr>
+          <tr><td>100 times more</td><td>~2,275</td><td class="num-col">about 48×</td></tr>
+          <tr><td>1,000 times more: the authors’ extreme theoretical limit</td><td>~4,025</td><td class="num-col">about 64×</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec split" id="air">
+    <div class="text">
+      <h2><span class="num">7</span>Air cleaning helps, but can’t do it alone</h2>
+      <p>Realistic ventilation and filter upgrades cut what you breathe in by up to about 5×. Far-UVC lamps, which kill viruses in the air, might reach 20–40× within safe light levels. Glycol vapours look modest.</p>
+      <p>Ventilation alone can’t close the gap: a 900× cut would mean replacing all the air in a room 900 times an hour, far beyond even an operating theatre. But cleaner air stacks with masks: a 4× cut brings the protection factor needed from 30× down to about 15×.</p>
+    </div>
+    <div class="card tool" id="air-tool">
+      <div class="ctl-grid">
+        <div class="ctl">
+          <span class="kicker">Cleaner air</span>
+          <label class="check"><input type="checkbox" id="air-vent"> <span>Better ventilation and filters <small>up to ~5×</small></span></label>
+          <label class="check"><input type="checkbox" id="air-uv"> <span>Far-UVC lamps <small>~20–40×, using 30×</small></span></label>
+        </div>
+        <div class="ctl"><span class="kicker">Masks, worn by everyone</span><div class="seg" id="air-mask" role="group" aria-label="Masks worn by everyone"></div></div>
+      </div>
+      <div class="outcome" aria-live="polite">
+        <div><span class="kicker">Total cut in what people breathe in</span><div class="big" id="air-total">1×</div></div>
+        <div class="scale" id="air-scale" aria-hidden="true">
+          <div class="scale-track"><i id="air-bar"></i></div>
+          <div class="ticks"><span style="left:0%">1×</span><span style="left:25%">10×</span><span style="left:50%">100×</span><span style="left:75%">1,000×</span><span style="left:100%">10,000×</span></div>
+        </div>
+      </div>
+      <p class="small" id="air-note"></p>
+    </div>
+  </section>
+
+  <section class="sec split" id="cost">
+    <div class="text">
+      <h2><span class="num">8</span>A stockpile would be cheap</h2>
+      <p>Disposable respirators cost about $1 each at bulk prices and last a few days. A reusable half mask costs about $30 and lasts years, so past about three months it is cheaper, and it protects better. That makes half masks with P100 filters the authors’ pick for a stockpile.</p>
+      <p>For the US, 20 million would cost about $600 million, plus about as much again for storage and handing them out. Spread over a 20-year stockpile, that is roughly $60 million a year: under 0.001% of federal spending.</p>
+    </div>
+    <div class="card tool" id="cost-tool">
+      <div class="ctl-grid">
+        <div class="ctl">
+          <label class="kicker" for="cost-n">Number of workers</label>
+          <input class="n-in" type="text" inputmode="numeric" id="cost-n" value="20,000,000">
+          <div class="seg" id="cost-presets" role="group" aria-label="Examples"></div>
+        </div>
+        <div class="ctl"><span class="kicker">How long the emergency lasts</span><div class="seg" id="cost-days" role="group" aria-label="How long the emergency lasts"></div></div>
+      </div>
+      <table class="tbl" id="cost-table">
+        <thead><tr><th scope="col">Mask</th><th scope="col">Each</th><th scope="col">Lasts</th><th scope="col">Per person per day</th><th scope="col">Total</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p class="small"><span id="cost-stock"></span> Rough bulk prices from the article; training, fit testing, replacement filters, batteries and distribution are not included.</p>
+    </div>
+  </section>
+
+  <section class="sec text" id="supply">
+    <h2><span class="num">9</span>Why not just make them when we need them?</h2>
+    <p>Because when a pandemic starts, everyone needs them at once. RAND looked at why the US struggled to make enough respirators during COVID-19:</p>
+    <ul>
+      <li><b>Most masks are made in one place.</b> Before COVID, China made about half the world’s masks, around 20 million a day. During the pandemic it supplied over 85% of US imports of N95s and face masks, and export restrictions can cut that off.</li>
+      <li><b>The filter fabric is a bottleneck.</b> N95s rely on a special “meltblown” polypropylene fabric, and the material and its machines run short exactly when demand surges.</li>
+      <li><b>New makers don’t survive the quiet years.</b> Of 107 US protective equipment companies started during the pandemic, 102 have stopped operating, undercut by cheaper imports.</li>
+    </ul>
+    <p>RAND’s conclusion: stockpiles are essential but not enough on their own. They need a stable domestic manufacturing base behind them, which needs predictable demand such as long-term contracts. Source: <a href="https://www.rand.org/pubs/research_reports/RRA5031-1.html" target="_blank" rel="noopener">RAND (2026)</a>.</p>
+  </section>
+
+  <section class="sec" id="you">
+    <h2><span class="num">10</span>What it means if you’re choosing a mask</h2>
+    <div class="you">
+      <div class="card"><h3>A reusable half mask is the sweet spot</h3><p>With P100 or P3 filters it protects more than a disposable respirator, and over months it costs less.</p></div>
+      <div class="card"><h3>Fit matters more than the filter</h3><p>Most of what gets in comes round the edges. Use head straps rather than ear loops, shape the nose clip with both hands, and get fit tested if you can.</p></div>
+      <div class="card"><h3>Wear it whenever you share air</h3><p>Ten minutes off counts for as much as 3 hours 20 minutes in a 20× mask. Consistency is what drives R below 1.</p></div>
+      <div class="card"><h3>Skip the valve if you might be ill</h3><p>A mask without an exhalation valve protects the people around you too, which is half of the PF × PF effect.</p></div>
+    </div>
+    <p class="callout warn" style="margin-top:1.25rem;max-width:44rem"><b>Watch out for fakes.</b> The CDC estimates that about 60% of KN95s in the US are fake, and from May 2025 to January 2026 NIOSH identified 1,245 fraudulent online listings misusing its approval marks. Buy from the maker or a known distributor, and check an N95’s approval number on NIOSH’s <a href="https://wwwn.cdc.gov/NIOSH-CEL/" target="_blank" rel="noopener">Certified Equipment List</a>.</p>
+    <div class="links"><a class="go" href="./">Find a mask →</a><a class="go" href="time.html">See how time in a mask adds up →</a></div>
+  </section>
+
+  <section class="sec" id="sources">
+    <h2>What this assumes, and sources</h2>
+    <div class="sources">
+      <div>
+        <p>The authors’ model is deliberately pessimistic and isn’t fitted to any one disease. It assumes evenly mixed air, no decay of the virus in the air, and that visibly ill workers stay home. The tools on this page are simplified from it.</p>
+        <p>The measured protection factors come from small studies, mostly of trained workers, and reaching 18× across millions of people depends on wearing masks consistently. The costs leave out training, logistics and the cost of people staying home.</p>
+      </div>
+      <ol class="srcs">
+        <li>Constantin Arnscheidt and Damon Binder, <a href="https://defensesindepth.bio/universal-respirator-usage-stops-worst-case-pandemics/" target="_blank" rel="noopener">Universal respirator usage stops worst-case pandemics</a>, Defenses in Depth (2026): the argument, the model and the prices</li>
+        <li>Group protection factor studies cited there: Lee et al. (2016), Lawrence et al. (2006), Duncan et al. (2020), Janssen and McCullough (2009), Vo et al. (2015)</li>
+        <li>Strong, Willis, Aveggio and Montemayor, <a href="https://www.rand.org/pubs/research_reports/RRA5083-1.html" target="_blank" rel="noopener">Personal Protective Equipment Prioritization and Demand</a>, RAND (2026): how many US workers would need protection</li>
+        <li>Popescu, Bakhshi, Roberts and others, <a href="https://www.rand.org/pubs/research_reports/RRA5031-1.html" target="_blank" rel="noopener">Respirator Surge Manufacturing</a>, RAND (2026): supply and counterfeits</li>
+        <li>CDC / NIOSH, <a href="https://www.cdc.gov/niosh/ppe/counterfeit_respirators/index.html" target="_blank" rel="noopener">Counterfeit and misrepresented respirators</a></li>
+        <li>Official ratings: US OSHA and UK HSE, as on the <a href="./#sources">mask guide</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <footer class="foot"><span>Respirator guide · updated November 2026</span><a href="#top">Back to top ↑</a></footer>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  // one row of pill buttons; `on` gets the value of the one pressed
+  const chips = (host, items, start, on) => {
+    const btns = items.map(([v, label]) => {
+      const b = el('button', null, label); b.type = 'button'; b.dataset.v = v; b.setAttribute('aria-pressed', String(v === start));
+      b.addEventListener('click', () => { btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); on(v); });
+      host.appendChild(b); return b;
+    });
+    return btns;
+  };
+  const fmt = (n) => n >= 1e9 ? `${(n / 1e9).toFixed(n < 1e10 ? 1 : 0)} bn` : n >= 1e6 ? `${(n / 1e6).toFixed(n < 1e7 ? 1 : 0)} m` : n >= 1e4 ? `${Math.round(n / 1e3)}k` : n >= 10 ? Math.round(n).toLocaleString('en-US') : n >= 1 ? n.toFixed(1).replace('.0', '') : n > 0 ? '<1' : '0';
+  const r2 = (r) => r >= 100 ? Math.round(r).toLocaleString('en-US') : r >= 10 ? r.toFixed(0) : r.toFixed(r < 0.1 ? 3 : 2);
+
+  // ---- R simulator: R = R0 × (share getting through)^(2 if the infected also wear a mask, else 1) ----
+  const VIRUSES = [
+    { id: 'covid', name: 'COVID-19 (original)', r0: 3, note: 'R₀ about 1.5–6.5; using 3.' },
+    { id: 'smallpox', name: 'Smallpox', r0: 5, note: 'R₀ about 3.5–6; using 5.' },
+    { id: 'measles', name: 'Measles', r0: 15, note: 'R₀ about 12–18; using 15.' },
+    { id: 'worst', name: 'Worst plausible at work', r0: 320, note: 'The authors’ pessimistic upper bound for a measles-like virus among workers sharing an office.' },
+    { id: 'extreme', name: 'Extreme theoretical', r0: 4025, note: 'The authors’ extreme upper bound for how infectious any virus could be.' },
+  ];
+  // official ratings, and the ranges measured in groups of wearers (the article covers N95s and elastomerics)
+  const SIM_MASKS = [
+    { id: 'none', name: 'No mask', off: [1, 1], meas: [1, 1] },
+    { id: 'surgical', name: 'Surgical mask', off: [2, 5], meas: [2, 5] },
+    { id: 'n95', name: 'N95 / FFP2', off: [10, 10], meas: [15, 40] },
+    { id: 'ehmr', name: 'Half mask, P100', off: [10, 20], meas: [30, 70] },
+  ];
+  const WEAR = [[1, '100%'], [.99, '99%'], [.95, '95%'], [.9, '90%'], [.75, '75%']];
+  let virus = VIRUSES[2], simMask = SIM_MASKS[3], mode = 'meas', wear = 1;
+  const gens = $('sim-gens');
+  for (let g = 0; g < 7; g++) { const d = el('div'); d.append(el('b'), el('i'), el('span')); gens.appendChild(d); }
+  // the protection someone actually gets when the mask is off part of the time
+  const effective = (pf) => 1 / ((1 - wear) + wear / pf);
+  function sim() {
+    const pfs = simMask[mode], pow = $('sim-source').checked ? 2 : 1;
+    const [rHi, rLo] = pfs.map((pf) => virus.r0 / effective(pf) ** pow);
+    $('sim-r').textContent = Math.abs(rHi - rLo) < .005 ? r2(rHi) : `${r2(rLo)} – ${r2(rHi)}`;
+    const v = $('sim-verdict');
+    if (rHi < 1) { v.textContent = 'Dies out'; v.className = 'verdict ok'; }
+    else if (rLo > 1) { v.textContent = 'Keeps growing'; v.className = 'verdict bad'; }
+    else { v.textContent = 'On the edge'; v.className = 'verdict mid'; }
+    // generations at the middle of the range, on a log scale from 1 to 10 billion
+    const r = Math.sqrt(rLo * rHi);
+    [...gens.children].forEach((d, g) => {
+      const n = Math.min(8e9, 100 * r ** g), bar = d.querySelector('i');
+      bar.style.height = `${Math.max(3, Math.log10(Math.max(1, n)) / 10 * 100)}px`;
+      bar.className = r < 1 ? 'down' : '';
+      d.querySelector('b').textContent = n >= 8e9 ? 'all' : fmt(n);
+      d.querySelector('span').textContent = g === 0 ? 'start' : `gen ${g}`;
+    });
+    const label = pfs[0] === pfs[1] ? `${pfs[0]}×` : `${pfs[0]}–${pfs[1]}×`;
+    const cap = wear < 1 ? ` Worn ${Math.round(wear * 100)}% of the time, no mask can do better than ${Math.round(1 / (1 - wear))}×.` : '';
+    const loose = simMask.id === 'surgical' ? ' Surgical masks slip and leak, and were rarely worn this consistently.' : '';
+    $('sim-note').textContent = `${virus.note}${simMask.id === 'none' ? '' : ` Protection factor ${label}.`}${cap}${loose}`;
+  }
+  chips($('sim-virus'), VIRUSES.map((x) => [x.id, x.name]), virus.id, (id) => { virus = VIRUSES.find((x) => x.id === id); sim(); });
+  chips($('sim-mask'), SIM_MASKS.map((x) => [x.id, x.name]), simMask.id, (id) => { simMask = SIM_MASKS.find((x) => x.id === id); sim(); });
+  chips($('sim-mode'), [['meas', 'Measured in studies'], ['off', 'Official ratings']], mode, (m) => { mode = m; sim(); });
+  chips($('sim-wear'), WEAR.map(([w, l]) => [String(w), l]), '1', (w) => { wear = +w; sim(); });
+  $('sim-source').addEventListener('change', sim);
+  sim();
+
+  // ---- air cleaning and masks, on a log scale from 1× to 10,000× ----
+  const AIR_MASKS = [
+    { id: 'none', name: 'None', cut: 1 },
+    { id: 'n95off', name: 'N95, official 10×', cut: 100 },
+    { id: 'n95', name: 'N95, measured ~20×', cut: 400 },
+    { id: 'ehmr', name: 'Half mask, ~30×', cut: 900 },
+  ];
+  const TARGETS = [['COVID', 3], ['Measles', 15], ['Worst plausible', 320], ['Extreme', 4025]];
+  let airMask = AIR_MASKS[0];
+  const pos = (x) => Math.min(100, Math.log10(Math.max(1, x)) / 4 * 100);
+  const scale = $('air-scale');
+  const targets = TARGETS.map(([name, x]) => { const t = el('span', 'target', name); t.style.left = `${pos(x)}%`; t.dataset.x = x; scale.appendChild(t); return t; });
+  function air() {
+    // ventilation and far-UVC both clear the room faster, so their removal rates add (5× + 30× ≈ 34×); masks filter what is left, so they multiply
+    const cleaner = 1 + ($('air-vent').checked ? 4 : 0) + ($('air-uv').checked ? 29 : 0), total = cleaner * airMask.cut;
+    $('air-total').textContent = `${Math.round(total).toLocaleString('en-US')}×`;
+    $('air-bar').style.width = `${pos(total)}%`;
+    targets.forEach((t) => t.classList.toggle('met', total >= +t.dataset.x));
+    const stopped = TARGETS.filter(([, x]) => total >= x).map(([n]) => n);
+    $('air-note').textContent = `${stopped.length ? `Enough to stop: ${stopped.join(', ')}.` : 'Not enough to stop any of them.'} Each marker is the cut that virus needs. Masks count twice, since everyone wears one.`;
+  }
+  chips($('air-mask'), AIR_MASKS.map((x) => [x.id, x.name]), airMask.id, (id) => { airMask = AIR_MASKS.find((x) => x.id === id); air(); });
+  ['air-vent', 'air-uv'].forEach((id) => $(id).addEventListener('change', air));
+  air();
+
+  // ---- stockpile cost: disposables are bought every 3 days of wear, the others once ----
+  const KINDS = [
+    { name: 'Disposable (N95 / FFP2)', each: 1, lasts: 'about 3 days', days: 3 },
+    { name: 'Reusable half mask (P100)', each: 30, lasts: 'years', days: Infinity },
+    { name: 'Full-face mask', each: 150, lasts: 'years', days: Infinity },
+    { name: 'Powered respirator', each: 1000, lasts: 'years, plus batteries', days: Infinity },
+  ];
+  const DAYS = [[30, '1 month'], [90, '3 months'], [180, '6 months'], [365, '1 year'], [730, '2 years']];
+  let days = 365;
+  const money = (x) => x >= 1e9 ? `$${(x / 1e9).toFixed(x < 1e10 ? 1 : 0)} billion` : x >= 1e6 ? `$${(x / 1e6).toFixed(x < 1e7 ? 1 : 0)} million` : x >= 1e3 ? `$${Math.round(x).toLocaleString('en-US')}` : `$${x.toFixed(2)}`;
+  const workers = () => Math.max(0, +$('cost-n').value.replace(/[^0-9]/g, '') || 0);
+  const costBody = $('cost-table').querySelector('tbody');
+  function cost() {
+    const n = workers();
+    const rows = KINDS.map((k) => { const per = k.days === Infinity ? k.each : Math.ceil(days / k.days) * k.each; return { k, per, total: per * n, daily: per / days }; });
+    const best = Math.min(...rows.map((r) => r.total));
+    costBody.replaceChildren(...rows.map((r) => {
+      const tr = el('tr', r.total === best && n ? 'hi' : '');
+      const name = el('td'); name.appendChild(el('b', null, r.k.name));
+      const total = el('td'); total.appendChild(el('b', null, n ? money(r.total) : '—'));
+      tr.append(name, el('td', null, `$${r.k.each.toLocaleString('en-US')}`), el('td', null, r.k.lasts), el('td', null, money(r.daily)), total);
+      return tr;
+    }));
+    $('cost-stock').textContent = n ? `Kept as a 20-year stockpile of half masks, with as much again for storage and handing them out: about ${money(n * 30 * 2 / 20)} a year.` : '';
+    presets.forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.v === n)));
+  }
+  const presets = chips($('cost-presets'), [['1000', 'A hospital · 1,000'], ['5300000', 'US top priority · 5.3m'], ['14300000', 'US health care · 14.3m'], ['20000000', 'US, article · 20m'], ['52000000', 'US critical, on site · 52m']], '20000000', (v) => { $('cost-n').value = (+v).toLocaleString('en-US'); cost(); });
+  chips($('cost-days'), DAYS.map(([d, l]) => [String(d), l]), '365', (d) => { days = +d; cost(); });
+  $('cost-n').addEventListener('input', cost);
+  $('cost-n').addEventListener('change', () => { $('cost-n').value = workers().toLocaleString('en-US'); });
+  cost();
+})();
+</script>
+</body>
+</html>

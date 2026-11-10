@@ -218,13 +218,13 @@
         <tbody>
           <tr><td>Everyone working in critical sectors</td><td class="num-col">85.7 million</td></tr>
           <tr><td>Critical sectors, leaving out those who can work from home</td><td class="num-col"><b>52 million</b></td></tr>
-          <tr><td>…who also face above-average exposure</td><td class="num-col">27 million</td></tr>
+          <tr><td>…who are also in the more exposed half of occupations</td><td class="num-col">27 million</td></tr>
           <tr><td>Lifeline sectors only (health care, utilities, food manufacturing, education, critical retail), on site</td><td class="num-col">24.6 million</td></tr>
           <tr><td>Health care workers who must be on site</td><td class="num-col">14.3 million</td></tr>
-          <tr><td>Above-average exposure <i>and</i> above-average importance to the rest of the economy</td><td class="num-col"><b>5.3 million</b></td></tr>
+          <tr><td>In both the more exposed half of occupations <i>and</i> the half that matter more to the rest of the economy</td><td class="num-col"><b>5.3 million</b></td></tr>
         </tbody>
       </table>
-      <p class="small">Even with no pandemic, 8 to 10 million US workers already need specialised protective equipment, which sets a floor for how much has to be made. Source: <a href="https://www.rand.org/pubs/research_reports/RRA5083-1.html" target="_blank" rel="noopener">RAND (2026)</a>.</p>
+      <p class="small">Even with no pandemic, up to about 10 million US workers spend most of their working time in specialised protective equipment. That is RAND’s upper estimate, and it covers gowns as well as respirators. Source: <a href="https://www.rand.org/pubs/research_reports/RRA5083-1.html" target="_blank" rel="noopener">RAND (2026)</a>.</p>
     </div>
   </section>
 
@@ -324,6 +324,7 @@
         <tbody></tbody>
       </table>
       <p class="small"><span id="cost-stock"></span> Rough bulk prices from the article; training, fit testing, replacement filters, batteries and distribution are not included.</p>
+      <p class="small">RAND’s 5.3 million is a way to decide who gets scarce masks first, not a target for a stockpile: R only falls below 1 if nearly everyone still mixing at work is masked.</p>
     </div>
   </section>
 
@@ -488,7 +489,7 @@
     $('cost-stock').textContent = n ? `Kept as a 20-year stockpile of half masks, with as much again for storage and handing them out: about ${money(n * 30 * 2 / 20)} a year.` : '';
     presets.forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.v === n)));
   }
-  const presets = chips($('cost-presets'), [['1000', 'A hospital · 1,000'], ['5300000', 'US top priority · 5.3m'], ['14300000', 'US health care · 14.3m'], ['20000000', 'US, article · 20m'], ['52000000', 'US critical, on site · 52m']], '20000000', (v) => { $('cost-n').value = (+v).toLocaleString('en-US'); cost(); });
+  const presets = chips($('cost-presets'), [['1000', 'A hospital · 1,000'], ['5300000', 'US, if masks are scarce · 5.3m'], ['14300000', 'US health care · 14.3m'], ['20000000', 'US, article · 20m'], ['52000000', 'US critical, on site · 52m']], '20000000', (v) => { $('cost-n').value = (+v).toLocaleString('en-US'); cost(); });
   chips($('cost-days'), DAYS.map(([d, l]) => [String(d), l]), '365', (d) => { days = +d; cost(); });
   $('cost-n').addEventListener('input', cost);
   $('cost-n').addEventListener('change', () => { $('cost-n').value = workers().toLocaleString('en-US'); });
